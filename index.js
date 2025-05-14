@@ -1,14 +1,18 @@
-const http = require('http');
+//API Express requesitos
+const express = require('express');
 const connection = require('./connect');
-const HOST = process.env.HOSTNAME || 'localhost' ;
-const PORT = process.env.PORT || 3000;
 
-const server = http.createServer((request, response) => {
-    response.statusCode = 200;
-    response.setHeader('Content-Type', 'text/html');
-    response.end("<h1>Hello World</h1>"); 
-});
+//comfiguração basica da express
+const app = express();
+const hostname = '127.0.0.1';
+const port = process.env.PORT || 3000;
+//Este é o inicio de toda o ordem da API aqui que vai começar a api rest
+app.get('/', (req, res) => {
+    res.send('this is alive');
+})
 
-server.listen(PORT, HOST, () => {
-    console.log(`Node server running on http://${HOST}:${PORT}/`);
+
+//fim do codigo
+app.listen(port, hostname, (error) => {
+    console.log(`Node server running on http://${hostname}:${port}/`);
 });
