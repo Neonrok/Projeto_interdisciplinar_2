@@ -16,6 +16,29 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'html', 'login.html'));
 })
 
+app.get('/api/perfil/:id', (req, res) => {
+    const userId = req.params.id;
+
+    const query = `
+        SELECT Perfil.Username, Perfil.descicao, Tipo_Cargos.cargo
+        FROM Perfil
+        LEFT JOIN Tipo_Cargos ON Perfil.cargo_id = Tipo_Cargos.id_cargo
+        WHERE Perfil.id_Users = ?
+    `;
+
+    connection.query(query, [userId], (err, results) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send('Erro ao buscar os dados do perfil.');
+        } else if (results.length === 0) {
+            res.status(404).send('Utilizador não encontrado.');
+        } else {
+            res.json(results[0]); // Retorna o primeiro resultado
+        }
+    });
+    
+    res.sendFile(path.join(__dirname, 'html', 'perfil.html'));
+});
 
 //fim do codigo
 app.listen(port, hostname, (error) => {
