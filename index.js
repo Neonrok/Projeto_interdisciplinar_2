@@ -19,6 +19,7 @@ app.get('/', (req, res) => {
 app.get('/api/perfil/:id', (req, res) => {
     const userId = req.params.id;
 
+    //tenho que trocar isto por sequalize
     const query = `
         SELECT Perfil.Username, Perfil.descicao, Tipo_Cargos.cargo
         FROM Perfil

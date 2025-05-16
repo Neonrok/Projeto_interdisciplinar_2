@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
         alert('ID do usuário não fornecido.');
         return;
     }
-
     fetch(`/api/perfil/${userId}`)
         .then(response => {
             if (!response.ok) {
