@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Eco-Escolas</title>
+  <link rel="stylesheet" href="../css/index.css"> 
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <h1>Eco-Escolas 🌱</h1>
+      <nav>
+        <a href="#">Início</a>
+        <a href="#">Sobre</a>
+        <a href="atividades.html">Atividades</a>
+        <a href="#">Contactos</a>
+        <a href="perfil.html">Perfil</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h2>Educação Ambiental Começa Aqui</h2>
+      <p>Inspira e transforma a tua escola com práticas sustentáveis.</p>
+      <button onclick="scrollToSection('atividades')">Explorar Atividades</button>
+    </div>
+  </section>
+
+  <section class="sobre">
+    <div class="container">
+      <h2>A Nossa Missão</h2>
+      <p>
+        O Eco-Escolas é um programa internacional que promove a educação ambiental e a sustentabilidade no ambiente escolar. Juntos, criamos um futuro mais verde!
+      </p>
+    </div>
+  </section>
+
+  <section class="atividades" id="atividades">
+    <div class="container">
+      <h2>Atividades em Destaque</h2>
+      <div class="cards">
+        <div class="card">
+          <h3>Recolha de Lixo</h3>
+          <p>Organiza eventos de limpeza no teu bairro ou escola.</p>
+        </div>
+        <div class="card">
+          <h3>Horta Escolar</h3>
+          <p>Aprende a cultivar alimentos saudáveis e orgânicos.</p>
+        </div>
+        <div class="card">
+          <h3>Oficinas Criativas</h3>
+          <p>Reutiliza materiais recicláveis para criar arte!</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 Eco-Escolas. Todos os direitos reservados.</p>
+      <div class="social">
+        <a href="#">Facebook</a>
+        <a href="#">Instagram</a>
+        <a href="#">Email</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function scrollToSection(id) {
+      document.getElementById(id).scrollIntoView({ behavior: "smooth" });
+    }
+  </script>
+
+</body>
+</html>
