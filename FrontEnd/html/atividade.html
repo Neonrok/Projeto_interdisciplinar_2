@@ -12,10 +12,10 @@
     <div class="container">
       <h1>Eco-Escolas 🌿</h1>
       <nav>
-        <a href="Projeto_interdisciplinar_2/FrontEnd/html/index.html">Início</a>
-        <a href="#">Sobre</a>
-        <a href="#">Atividades</a>
-        <a href="#">Contactos</a>
+        <a href="../html/index.html">Início</a>
+        <a href="../html/sobre.html">Sobre</a>
+        <a href="../html/atividade.html">Atividades</a>
+        <a href="../html/contactos.html">Contactos</a>
         <a href="../html/perfil.html">Perfil</a>
       </nav>
     </div>
@@ -74,24 +74,6 @@
     </div>
   </footer>
 
-  <script>
-    function filtrarAtividades(categoria) {
-  const cards = document.querySelectorAll('.card');
-  cards.forEach(card => {
-    if (categoria === 'todas') {
-      card.style.display = 'block';
-    } else {
-      if (card.classList.contains(categoria)) {
-        card.style.display = 'block';
-      } else {
-        card.style.display = 'none';
-      }
-    }
-  });
-}
-
-    // Inicializa mostrando todas as atividades
-    filtrarAtividades('todas');
-  </script>
+  <script src="../js/atividades.js"></script>
 </body>
 </html>

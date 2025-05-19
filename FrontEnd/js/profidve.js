@@ -23,3 +23,30 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Erro ao carregar os dados do perfil.');
         });
 });
+
+document.getElementById("logoutBtn").addEventListener("click", () => {
+  // limpar dados de sessão
+  // localStorage.clear();
+
+  // Redirecionar para página de login
+  window.location.href = "../html/login.html";
+});
+
+const fotoPerfilContainer = document.getElementById('foto-perfil-container');
+const inputFotoPerfil = document.getElementById('input-foto-perfil');
+const fotoPerfil = document.getElementById('foto-perfil');
+
+fotoPerfilContainer.addEventListener('click', () => {
+  inputFotoPerfil.click();  // Abre o seletor de arquivos
+});
+
+inputFotoPerfil.addEventListener('change', () => {
+  const file = inputFotoPerfil.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      fotoPerfil.src = e.target.result;  // Atualiza a foto para a nova selecionada
+    };
+    reader.readAsDataURL(file);
+  }
+});

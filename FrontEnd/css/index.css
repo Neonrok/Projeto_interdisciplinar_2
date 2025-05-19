@@ -109,3 +109,29 @@ footer .social a {
     padding: 20px;
   }
 }
+
+.user-section {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  padding-left: 1rem;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Espaço entre os links e a foto */
+}
+
+.foto-label {
+  cursor: pointer;
+  margin-left: auto; /* "Empurra" a foto para a extrema direita */
+}
+
+#foto-perfil {
+  width: 40px;
+  height: 40px;
+  border-radius: 30%;
+  object-fit: cover;
+  border: 2px solid #4CAF50;
+}

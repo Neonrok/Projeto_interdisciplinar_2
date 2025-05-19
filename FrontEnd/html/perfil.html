@@ -1,22 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil do Usuário</title>
-    <link rel="stylesheet" href="../css/proftyle.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Perfil do Utilizador</title>
+  <link rel="stylesheet" href="../css/proftyle.css">
 </head>
 <body>
-    <div class="profile-container">
-        <div class="profile-header">
-            <h1>Perfil do Utilizador</h1>
-        </div>
-        <div class="profile-info">
-            <p id="N_User"></p>
-            <p id="posit"></p>
-            <p id="desc"></p>
-        </div>
+
+  <header>
+    <div class="container">
+      <h1>Eco-Escolas 🌿</h1>
+      <nav>
+        <a href="index.html">Início</a>
+        <a href="../html/sobre.html">Sobre</a>
+        <a href="../html/atividade.html">Atividades</a>
+        <a href="../html/contactos.html">Contactos</a>
+        <a href="../html/perfil.html">Perfil</a>
+        
+      </nav>
     </div>
-    <script src="..\js\profidve.js"></script>
+  </header>
+
+ <main class="container">
+  <section class="perfil-card">
+    <div class="perfil-header">
+      <div class="foto-perfil" id="foto-perfil-container" style="cursor:pointer;">
+        <img id="foto-perfil" src="https://static.vecteezy.com/system/resources/previews/007/296/447/original/user-icon-in-flat-style-person-icon-client-symbol-vector.jpg" alt="Foto do utilizador">
+      </div>
+      <input type="file" id="input-foto-perfil" accept="image/*" style="display:none;">
+      <div>
+        <h2 id="username">Sheldon Jasse</h2>
+        <p id="cargo">Coordenador Eco-Escolas</p>
+      </div>
+    </div>
+  </section>
+      <div class="perfil-info">
+        <p><strong>ID:</strong> <span id="user-id">40230207</span></p>
+        <p><strong>Email:</strong> <span id="email">sheldonjasse2004@gmail.com</span></p>
+        <p><strong>Descrição:</strong></p>
+        <p id="bio">
+          Estudante apaixonado por tecnologia e sustentabilidade, dedicado a desenvolver projetos ecológicos e educativos na comunidade escolar.
+        </p>
+      </div>
+    </section>
+
+    <!-- Botão de Terminar Sessão -->
+    <div class="logout-container" style="text-align: center; margin-top: 30px;">
+      <button id="logoutBtn" style="
+        background-color: #c62828;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        font-size: 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.3s;
+      ">Terminar Sessão</button>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 Eco-Escolas. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+  
+  <script src="../js/profidve.js"></script>
+    <script>
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+        // Aqui você pode adicionar a lógica para terminar a sessão
+        alert('Sessão terminada com sucesso!');
+        window.location.href = 'login.html'; // Redireciona para a página de login
+        });
+    </script>
+
 </body>
 </html>
