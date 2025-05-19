@@ -2,11 +2,13 @@
 const express = require('express');
 const connection = require('./connect');
 const path = require('path')
+const { Sequelize, DataTypes } = require('sequelize');
 
 //comfiguração basica da express
 const app = express();
 const hostname = '127.0.0.1';
 const port = process.env.PORT || 3000;
+
 //serve para o cliente poder ir buscar a outras pastas coisas que o html precisa
 app.use('/css', express.static(path.join(__dirname, 'css')));
 app.use('/js', express.static(path.join(__dirname, 'js')));
