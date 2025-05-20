@@ -2,7 +2,6 @@
 const express = require('express');
 const connection = require('./connect');
 const path = require('path')
-const { Sequelize, DataTypes } = require('sequelize');
 
 //comfiguração basica da express
 const app = express();
