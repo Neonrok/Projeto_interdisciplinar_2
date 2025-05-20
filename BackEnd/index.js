@@ -1,12 +1,17 @@
 //API Express requesitos
 const express = require('express');
-const connection = require('./models/connect');
-const path = require('path')
+
+const db = require('../models/db.js');
+const Post = db.Post;
+
+require('dotenv').config();
 
 //comfiguração basica da express
 const app = express();
-const hostname = '127.0.0.1';
+const host = process.env.HOST;
 const port = process.env.PORT || 3000;
+
+app.use(express.json());
 
 //serve para o cliente poder ir buscar a outras pastas coisas que o html precisa
 app.use('/css', express.static(path.join(__dirname, 'css')));
@@ -43,6 +48,6 @@ app.get('/api/perfil/:id', (req, res) => {
 });
 
 //fim do codigo
-app.listen(port, hostname, (error) => {
-    console.log(`Node server running on http://${hostname}:${port}/`);
+app.listen(port, host, (error) => {
+    console.log(`Node server running on http://${host}:${port}/`);
 });
