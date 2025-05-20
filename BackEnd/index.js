@@ -1,6 +1,6 @@
 //API Express requesitos
 const express = require('express');
-const connection = require('./connect');
+const connection = require('./models/connect');
 const path = require('path')
 
 //comfiguração basica da express
