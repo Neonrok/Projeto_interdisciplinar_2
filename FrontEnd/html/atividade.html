@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atividades | Eco-Escolas</title>
+  <link rel="stylesheet" href="../css/atividades.css"> 
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <h1>Eco-Escolas 🌿</h1>
+      <nav>
+        <a href="index.html">Início</a>
+        <a href="#">Sobre</a>
+        <a href="#">Atividades</a>
+        <a href="#">Contactos</a>
+        <a href="perfil.html">Perfil</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="intro">
+    <div class="container">
+      <h2>Atividades Sustentáveis</h2>
+      <p>Explora atividades ecológicas para envolver a tua comunidade escolar.</p>
+
+      <div class="filtros">
+        <button onclick="filtrarAtividades('todas')">Todas</button>
+        <button onclick="filtrarAtividades('reciclagem')">Reciclagem</button>
+        <button onclick="filtrarAtividades('horta')">Horta</button>
+        <button onclick="filtrarAtividades('oficina')">Oficina</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="atividades container" id="lista-atividades">
+    <!-- Atividades inseridas via HTML ou JS -->
+    <div class="card reciclagem">
+      <h3>Projeto Papel Amigo</h3>
+      <p>Campanha de recolha de papel e sensibilização sobre o seu reaproveitamento.</p>
+    </div>
+
+    <div class="card horta">
+      <h3>Horta Biológica</h3>
+      <p>Montagem de uma horta com ervas aromáticas, alfaces e legumes.</p>
+    </div>
+
+    <div class="card oficina">
+      <h3>Oficina de Sabão Artesanal</h3>
+      <p>Criação de sabão ecológico a partir de óleo usado.</p>
+    </div>
+
+    <div class="card reciclagem">
+      <h3>Troca de Roupas</h3>
+      <p>Evento de troca solidária para promover a reutilização de vestuário.</p>
+    </div>
+
+    <div class="card oficina">
+      <h3>Artes com Sucata</h3>
+      <p>Criação de brinquedos e objetos artísticos com lixo reciclável.</p>
+    </div>
+
+    <div class="card horta">
+      <h3>Plantação de Árvores</h3>
+      <p>Atividade de reflorestação nos arredores da escola com espécies nativas.</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 Eco-Escolas. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <script>
+    function filtrarAtividades(categoria) {
+  const cards = document.querySelectorAll('.card');
+  cards.forEach(card => {
+    if (categoria === 'todas') {
+      card.style.display = 'block';
+    } else {
+      if (card.classList.contains(categoria)) {
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    }
+  });
+}
+
+    // Inicializa mostrando todas as atividades
+    filtrarAtividades('todas');
+  </script>
+</body>
+</html>
