@@ -1,4 +1,4 @@
-const db = require('../models/db.js');
+const db = require('../models/connect.js');
 const Post = db.Post;
 
 const { Op } = require('sequelize');

@@ -26,6 +26,20 @@ const sequelize = new Sequelize(
 }
 )();
 
+const bd = {}; 
+bd.sequelize = sequelize;
+
+bd.User = require("./users.model.js")(sequelize, Sequelize.DataTypes);
+
+(async () => {
+    try {
+        await db.sequelize.sync({ alter: true });
+        console.log('DB is successfully synchronized')
+    } catch (error) {
+        console.log(error)
+    }
+})();
+
 const db = {}; //object to be exported
 db.sequelize = sequelize; //save the Sequelize instance (actual connection pool)
 
