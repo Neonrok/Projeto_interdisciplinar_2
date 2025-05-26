@@ -14,15 +14,23 @@ app.use(express.json());
 //Este é o inicio de toda o ordem da API aqui que vai começar a api rest
 app.use((req, res, next) => {
     const start = Date.now();
-    res.on("finish", () => { // finish event is emitted once the response is sent to the client
-        const diffSeconds = (Date.now() - start) / 1000; // figure out how many seconds elapsed
+    res.on("finish", () => {
+        const diffSeconds = (Date.now() - start) / 1000;
         console.log(`Request: ${req.method} ${req.originalUrl} completed in ${diffSeconds} seconds`);
     });
     next()
 })
 
+//Base da API REST que redireciona para outro arquivo com base nas rotas
+//Rota dos parametros do /users
 app.use('/users', require('./routes/perfil.routes.js'));
 
+//Caso não seja encontrado manda o erro404    
+app.use((req, res, next) => {
+    res.status(404).json({ message: `The requested resource was not found: ${req.method} ${req.originalUrl}` });
+});
+
+//Outros erros que podem aparecer
 app.use((err, req, res, next) => {
     // !Uncomment this line to log the error details to the server console!
     console.error(err);
