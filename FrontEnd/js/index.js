@@ -1,4 +1,9 @@
-    function scrollToSection(id) {
+   
+   function scrollToSection(id) {
+      document.getElementById(id).scrollIntoView({ behavior: "smooth" });
+    }   
+   
+   function scrollToSection(id) {
       document.getElementById(id).scrollIntoView({ behavior: "smooth" });
     }
 
@@ -24,3 +29,39 @@
       reader.readAsDataURL(file);
     }
   });
+
+      // Scroll suave
+    function scrollToSection(id) {
+      const section = document.getElementById(id);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    // Aparecer seções ao fazer scroll
+    const sections = document.querySelectorAll("section");
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+        }
+      });
+    }, {
+      threshold: 0.1
+    });
+
+    sections.forEach(section => observer.observe(section));
+
+
+  function scrollCarousel(direction) {
+    const carousel = document.getElementById('atividadeCarousel');
+    const scrollAmount = 270; // largura do card + gap
+    carousel.scrollBy({
+      left: direction * scrollAmount,
+      behavior: 'smooth'
+    });
+  }
+
+  function verMais(atividade) {
+    alert("Mais informações sobre: " + atividade + "\n(Em breve!)");
+  }

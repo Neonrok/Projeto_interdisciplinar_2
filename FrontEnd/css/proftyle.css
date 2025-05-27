@@ -1,100 +1,117 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Segoe UI', sans-serif;
-}
-
-body {
-  background-color: #f0f9f1;
-  color: #2e2e2e;
-}
-
-.container {
-  width: 90%;
-  max-width: 1100px;
-  margin: auto;
-}
-
-header {
-  background: #2e7d32;
-  color: white;
-  padding: 20px 0;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
-
-header .container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-nav a {
-  margin-left: 20px;
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-main {
-  padding: 40px 0;
-}
-
-.perfil-card {
-  background: white;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-.perfil-header {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  margin-bottom: 25px;
-}
-
-.foto-perfil img {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  border: 3px solid #66bb6a;
-}
-
-.perfil-info p {
-  margin-bottom: 12px;
-  line-height: 1.6;
-}
-
-footer {
-  background: #1b5e20;
-  color: white;
-  text-align: center;
-  padding: 20px 0;
-  margin-top: 40px;
-}
-footer p {
-  margin: 0;
-}
-
-.logout-container {
-  text-align: center;
-  margin-top: 30px;
-}
-
-#logoutBtn {
-  background-color: #c62828;
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  font-size: 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-#logoutBtn:hover {
-  background-color: #b71c1c;
-}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      background-color: #f0f9f1;
+      color: #2e2e2e;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .container {
+      width: 90%;
+      max-width: 1100px;
+      margin: auto;
+      padding: 20px 0;
+      flex-grow: 1;
+    }
+    header {
+      background: #2e7d32;
+      color: white;
+      padding: 20px 0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    nav a {
+      margin-left: 20px;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: #a5d6a7;
+    }
+    main {
+      padding: 40px 0;
+    }
+    .perfil-card {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      max-width: 600px;
+      margin: auto;
+    }
+    .perfil-header {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+      margin-bottom: 30px;
+    }
+    .foto-perfil {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid #66bb6a;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .foto-perfil img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .perfil-info p {
+      margin-bottom: 12px;
+      line-height: 1.6;
+    }
+    .perfil-info strong {
+      font-weight: 600;
+    }
+    .admin-area {
+      display: none;
+      background: #e8f5e9;
+      border: 1px solid #66bb6a;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 600px;
+      margin: 40px auto 0;
+      text-align: center;
+    }
+    .admin-area.active {
+      display: block;
+    }
+    .admin-link-btn, #logoutBtn {
+      display: inline-block;
+      background: #388e3c;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      margin: 10px 10px 0 0;
+      text-decoration: none;
+    }
+    .admin-link-btn:hover, #logoutBtn:hover {
+      background: #2e7d32;
+    }
+    #logoutBtn {
+      background-color: #c62828;
+    }
+    #logoutBtn:hover {
+      background-color: #b71c1c;
+    }
