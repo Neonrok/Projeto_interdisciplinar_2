@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Área de Administração</title>
+  <style>
+    :root {
+      --cor-principal: #2e7d32;
+      --cor-secundaria: #a5d6a7;
+      --cor-fundo: #f1f8e9;
+      --cor-branca: #fff;
+      --cor-borda: #ccc;
+      --sombra: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--cor-fundo);
+      margin: 0;
+      padding: 30px;
+      color: #333;
+    }
+
+    h1, h2, h3 {
+      color: var(--cor-principal);
+      margin-top: 30px;
+    }
+
+    .top-buttons {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    .top-buttons button {
+      background-color: var(--cor-principal);
+      color: var(--cor-branca);
+      border: none;
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .top-buttons button:hover {
+      background-color: #256428;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background-color: var(--cor-branca);
+      border-radius: 8px;
+      box-shadow: var(--sombra);
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 14px;
+      border-bottom: 1px solid var(--cor-borda);
+      text-align: left;
+    }
+
+    th {
+      background-color: var(--cor-secundaria);
+      color: #1b5e20;
+    }
+
+    tr:hover {
+      background-color: #e8f5e9;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid var(--cor-borda);
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: var(--cor-principal);
+      color: var(--cor-branca);
+      border: none;
+      padding: 10px 18px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #256428;
+    }
+
+    ul#listaProjetos {
+      list-style-type: disc;
+      padding-left: 20px;
+      margin-top: 10px;
+    }
+
+    ul#listaProjetos li {
+      margin-bottom: 6px;
+    }
+
+    hr {
+      margin: 40px 0;
+      border: none;
+      border-top: 1px solid #c8e6c9;
+    }
+  </style>
+</head>
+<body>
+  <div class="top-buttons">
+    <button onclick="logout()">Logout</button>
+  </div>
+
+  <h1>Área de Administração</h1>
+
+  <h2>Utilizadores Registados</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>Palavra-passe</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody id="userTableBody"></tbody>
+  </table>
+
+  <hr>
+
+  <h2>Adicionar Novo Projeto</h2>
+  <input type="text" id="tituloProjeto" placeholder="Título do projeto">
+  <input type="text" id="descricaoProjeto" placeholder="Descrição">
+  <input type="text" id="categoriaProjeto" placeholder="Categoria">
+  <button onclick="adicionarProjeto()">Guardar Projeto</button>
+
+  <h3>Atividades Guardados</h3>
+  <ul id="listaAtividades"></ul>
+
+  <script src="../js/admin.js"></script>
+</body>
+</html>

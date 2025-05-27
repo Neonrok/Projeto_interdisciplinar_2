@@ -1,39 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login and Sign Up</title>
-    <link rel="stylesheet" href="../css/logstyle.css">
+  <meta charset="UTF-8">
+  <title>Login - EcoEscolas</title>
+  <link rel="stylesheet" href="../css/logstyle.css"> 
 </head>
 <body>
-    <div class="container" id="login-container">
-        <h2>Login</h2>
-        <form id="login-form">
-            <input type="email" placeholder="Email" required>
-            <input type="password" placeholder="Password" required>
-            <button type="submit">Login</button>
-        </form>
-        <div class="toggle">
-            <p>Don't have an account? <a href="#" onclick="showSignUp()">Sign Up</a></p>
-                <p>Entrar como convidado <a href="#" onclick="showGuest()">Convidado</a></p>
-        </div>
-    </div>
 
-    <div class="container" id="signup-container" style="display: none;">
-        <h2>Sign Up</h2>
-        <form id="signup-form">
-            <input type="text" placeholder="Full Name" required>
-            <input type="email" placeholder="Email" required>
-            <input type="password" placeholder="Password" required>
-            <button type="submit">Sign Up</button>
-        </form>
-  <div class="toggle">
-    <p>Already have an account? <a href="#" onclick="showLogin()">Login</a></p>
-    <p>Entrar como convidado <a href="#" onclick="showGuest()">Convidado</a></p>
+  <div class="form-container">
+
+    <!-- Login de Utilizador -->
+    <div id="login-container">
+  <input type="email" id="userEmail" placeholder="Email">
+  <input type="password" id="userPassword" placeholder="Senha">
+  <button onclick="loginUser()">Entrar</button>
 </div>
 
+    <!-- Registo -->
+<div id="signup-container" class="hidden">
+  <input type="email" id="newEmail" placeholder="Novo email">
+  <input type="password" id="newPassword" placeholder="Nova senha">
+  <button onclick="signUpUser()">Registar</button>
+</div>
 
-  <script src="../js/login.js"></script>
+    <!-- Login de Admin -->
+<div id="admin-login-container" class="hidden">
+  <input type="email" id="adminEmail" placeholder="admin@ecoescolas.com">
+  <input type="password" id="adminPassword" placeholder="admin123">
+  <button onclick="loginAdmin()">Entrar como Admin</button>
+</div>
+
+    <!-- Mensagens de Erro -->
+    <div id="error-message" class="hidden"></div>
+    <div id="success-message" class="hidden"></div>
+
+<button onclick="showSignUp()">Criar conta</button>
+<button onclick="showAdminLogin()">Admin</button>
+<button onclick="loginGuest()">Entrar como Convidado</button>
+
+  <script src="../js/login.js"> </script>
+
 </body>
 </html>

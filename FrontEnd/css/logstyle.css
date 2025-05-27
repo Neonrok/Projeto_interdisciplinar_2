@@ -1,53 +1,127 @@
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #1b8a33;
-        }
-        .container {
-            width: 300px;
-            padding: 4%;
-            background: #ffffff;
-            box-shadow: 4px 4px 8px rgba(26, 22, 22, 0.2);
-            border-radius: 8px;
-        }
-        h2 {
-            text-align: center;
-            margin-bottom: 7%;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-        }
-        input {
-            margin-bottom: 15px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        button {
-            padding: 10px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        .toggle {
-            text-align: center;
-            margin-top: 10px;
-        }
-        .toggle a {
-            color: #007BFF;
-            text-decoration: none;
-        }
-        .toggle a:hover {
-            text-decoration: underline;
-        }
+:root {
+  --primary-color: #2e7d32;
+  --primary-dark: #1b5e20;
+  --background: #adb4ad;
+  --button-red: #c62828;
+  --button-green: #388e3c;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: linear-gradient(rgba(94, 94, 94, 0.692), rgba(255, 255, 255, 0.664)),
+              url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.form-container {
+  background-color: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 420px;
+}
+
+/* Títulos */
+h2 {
+  text-align: center;
+  color: var(--primary-color);
+  margin-bottom: 25px;
+  font-size: 24px;
+}
+
+/* Inputs */
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 12px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  transition: border-color 0.3s ease;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+/* Botões */
+button {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: var(--primary-dark);
+}
+
+/* Botão padrão (verde) */
+button.btn-default {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+/* Botões personalizados */
+button.btn-logout {
+  background-color: var(--button-red);
+  color: white;
+}
+
+button.btn-logout:hover {
+  background-color: #a52020;
+}
+
+button.btn-admin {
+  background-color: var(--button-green);
+  color: white;
+  display: none;
+}
+
+button.btn-admin:hover {
+  background-color: #2e7030;
+}
+
+/* Textos e links */
+p {
+  text-align: center;
+  margin-top: 12px;
+  font-size: 14px;
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Esconder elementos */
+.hidden {
+  display: none;
+}
+
+/* Container dos botões no perfil */
+.botoes-perfil {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 25px;
+}

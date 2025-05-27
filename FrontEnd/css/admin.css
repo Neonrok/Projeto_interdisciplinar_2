@@ -1,0 +1,29 @@
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f1f8e9;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #2e7d32;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 12px;
+      border: 1px solid #ccc;
+    }
+
+    th {
+      background-color: #a5d6a7;
+    }
+
+    .admin-area {
+  display: none;
+}
+    
