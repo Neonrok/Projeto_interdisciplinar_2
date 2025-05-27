@@ -1,49 +1,80 @@
 //API Express requesitos
 const express = require('express');
-const connection = require('./connect');
-const path = require('path')
-const { Sequelize, DataTypes } = require('sequelize');
+require('dotenv').config();
 
 //comfiguração basica da express
 const app = express();
-const hostname = '127.0.0.1';
+const host = process.env.HOST;
 const port = process.env.PORT || 3000;
 
-//serve para o cliente poder ir buscar a outras pastas coisas que o html precisa
-app.use('/css', express.static(path.join(__dirname, 'css')));
-app.use('/js', express.static(path.join(__dirname, 'js')));
+app.use(express.json());
+
 
 //Este é o inicio de toda o ordem da API aqui que vai começar a api rest
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'html', 'login.html'));
+app.use((req, res, next) => {
+    const start = Date.now();
+    res.on("finish", () => {
+        const diffSeconds = (Date.now() - start) / 1000;
+        console.log(`Request: ${req.method} ${req.originalUrl} completed in ${diffSeconds} seconds`);
+    });
+    next()
 })
 
-app.get('/api/perfil/:id', (req, res) => {
-    const userId = req.params.id;
+//Base da API REST que redireciona para outro arquivo com base nas rotas
+//Rota dos parametros do /users
+app.use('/users', require('./routes/perfil.js'));
 
-    //tenho que trocar isto por sequalize
-    const query = `
-        SELECT Perfil.Username, Perfil.descicao, Tipo_Cargos.cargo
-        FROM Perfil
-        LEFT JOIN Tipo_Cargos ON Perfil.cargo_id = Tipo_Cargos.id_cargo
-        WHERE Perfil.id_Users = ?
-    `;
+//Caso não seja encontrado manda o erro404    
+app.use((req, res, next) => {
+    res.status(404).json({ message: `The requested resource was not found: ${req.method} ${req.originalUrl}` });
+});
 
-    connection.query(query, [userId], (err, results) => {
-        if (err) {
-            console.error(err);
-            res.status(500).send('Erro ao buscar os dados do perfil.');
-        } else if (results.length === 0) {
-            res.status(404).send('Utilizador não encontrado.');
-        } else {
-            res.json(results[0]); // Retorna o primeiro resultado
+//Outros erros que podem aparecer
+app.use((err, req, res, next) => {
+    // !Uncomment this line to log the error details to the server console!
+    console.error(err);
+
+    // error thrown by express.json() middleware when the request body is not valid JSON
+    if (err.type === 'entity.parse.failed')
+        return res.status(400).json({ error: 'Invalid JSON payload! Check if your body data is a valid JSON.' });
+
+    // Sequelize validation errors (ALL models)
+    if (err.name === 'SequelizeValidationError' || err.name === 'SequelizeUniqueConstraintError') {
+        return res.status(400).json({
+            error: 'Validation error',
+            details: err.errors.map(e => ({
+                field: e.path,
+                message: e.message
+            }))
+        });
+    }
+
+    // SequelizeDatabaseError related to an invalid ENUM value (USERS table -> role field)
+    if (err.name === 'SequelizeDatabaseError') {
+        if (err.original.code === 'ER_CHECK_CONSTRAINT_VIOLATED') {
+            return res.status(400).json({
+                error: 'Invalid value for enumerated field',
+                message: err.message
+            });
         }
-    });
-    
-    res.sendFile(path.join(__dirname, 'html', 'perfil.html'));
+        if (err.original.code === 'ER_BAD_NULL_ERROR') {
+            return res.status(400).json({
+                error: 'Missing mandatory field',
+                message: err.message
+            });
+        }
+        if (err.original.code === 'ER_DUP_ENTRY') {
+            return res.status(400).json({
+                error: 'Duplicate entry',
+                message: err.message
+            });
+        }
+    }
+    // other errors
+    res.status(err.statusCode || 500).json({ error: err.message || 'Internal Server Error' });
 });
 
 //fim do codigo
-app.listen(port, hostname, (error) => {
-    console.log(`Node server running on http://${hostname}:${port}/`);
+app.listen(port, host, (error) => {
+    console.log(`Node server running on http://${host}:${port}/`);
 });
