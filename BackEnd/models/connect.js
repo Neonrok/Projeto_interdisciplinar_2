@@ -30,8 +30,8 @@ const sequelize = new Sequelize(
 const bd = {}; 
 bd.sequelize = sequelize;
 //Defenições de dependencias para o sequelize usar o my sql
-bd.Perfil = require("./users.model.js")(sequelize, Sequelize.DataTypes);
 /*
+bd.Perfil = require("./users.model.js")(sequelize, Sequelize.DataTypes);
 //defenir relações
 bd.Tipo_Cargos.hasMany(bd.Perfil, {foreignKey: 'id_cargo', onDelete: 'RESTRICT', allowNull: false})
 bd.Perfil.belongsTo(bd.Tipo_Cargos, {foreignKey: 'cargo_id', as: 'cargo', onDelete: 'RESTRICT', allowNull: false})
@@ -44,6 +44,5 @@ bd.Perfil.belongsTo(bd.Tipo_Cargos, {foreignKey: 'cargo_id', as: 'cargo', onDele
         console.log(error)
     }
 })();
-
 
 module.exports = bd;
