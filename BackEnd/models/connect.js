@@ -1,5 +1,4 @@
 const { Sequelize } = require('sequelize');
-console.log(process.env.BD_NAME, process.env.BD_USER, process.env.BD_PASS)
 const sequelize = new Sequelize(
     process.env.BD_NAME, process.env.BD_USER, process.env.BD_PASS,
     {
@@ -30,8 +29,12 @@ const sequelize = new Sequelize(
 const bd = {}; 
 bd.sequelize = sequelize;
 //Defenições de dependencias para o sequelize usar o my sql
-/*
-bd.Perfil = require("./users.model.js")(sequelize, Sequelize.DataTypes);
+/*bd.Perfil = require("./users.model.js")(sequelize, Sequelize.DataTypes);
+bd.Tipo_Cargos = require("./TC.model.js")(sequelize, Sequelize.DataTypes);
+bd.Atividades = require()(sequelize, Sequelize.DataTypes);
+
+
+
 //defenir relações
 bd.Tipo_Cargos.hasMany(bd.Perfil, {foreignKey: 'id_cargo', onDelete: 'RESTRICT', allowNull: false})
 bd.Perfil.belongsTo(bd.Tipo_Cargos, {foreignKey: 'cargo_id', as: 'cargo', onDelete: 'RESTRICT', allowNull: false})

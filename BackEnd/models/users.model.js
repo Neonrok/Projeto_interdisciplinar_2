@@ -1,5 +1,4 @@
 //Explicação como funciona a base de dados para o sequelize
-
 module.exports = (sequelize, DataTypes) => {
     const User = sequelize.define('Perfil', {
         Username: {
