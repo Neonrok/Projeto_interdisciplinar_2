@@ -1,9 +1,10 @@
 {
   "name": "api_eco",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "./BackEnd/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./BackEnd/index.js"
   },
   "keywords": [
     "Node",
@@ -13,6 +14,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "mysql2": "^3.14.1",
+    "sequelize": "^6.37.7"
   }
 }

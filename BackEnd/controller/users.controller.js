@@ -4,7 +4,7 @@ const Post = db.Post;
 const { Op } = require('sequelize');
 const { ErrorHandler } = require("../utils/error.js");
 
-let getPostsFromUser = async (req, res, next) => {
+let getInfosFromUser = async (req, res, next) => {
 
     try {
         const user = await User.findByPk(req.params.id, {
@@ -18,11 +18,7 @@ let getPostsFromUser = async (req, res, next) => {
 
         posts.forEach(post => {
             post.dataValues.links = [
-                { rel: "self", href: `/posts/${post.id}`, method: "GET" },
-                { rel: "delete", href: `/posts/${post.id}`, method: "DELETE" },
-                { rel: "modify", href: `/posts/${post.id}`, method: "PUT" },
-                // link to add tags to the post
-                { rel: "add-tags", href: `/posts/${post.id}/tags`, method: "POST" },
+                { rel: "self", href: `/`, method: "GET" }
             ]
         });
 
@@ -35,3 +31,6 @@ let getPostsFromUser = async (req, res, next) => {
         next(err);
     }
 };
+module.exports = {
+    getInfosFromUser
+}

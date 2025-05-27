@@ -9,9 +9,9 @@ const router = express.Router();
 //isso agora faz é para escolher que tipo de rota está a escolner.
 
 //Função de controlo
-const usersController = require('../controllers/users.controller.js');
+const usersController = require('../controller/users.controller.js');
 
 // routes for /users requests
-router.get('/:id/posts', usersController.getPostsFromUser); // get all posts from a user
+router.get('/:id', usersController.getInfosFromUser); // get all infus about users
 
 module.exports = router;

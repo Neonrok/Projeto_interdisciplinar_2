@@ -1,6 +1,5 @@
 //API Express requesitos
 const express = require('express');
-
 require('dotenv').config();
 
 //comfiguração basica da express
