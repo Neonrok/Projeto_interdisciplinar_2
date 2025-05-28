@@ -1,6 +1,14 @@
+const { preProcessFile } = require("typescript");
+
 //Explicação como funciona a base de dados para o sequelize
 module.exports = (sequelize, DataTypes) => {
     const User = sequelize.define('Perfil', {
+        id_Users: {
+            type:DataTypes.INTEGER,
+            allowNull: false,
+            primaryKey: true,
+            autoIncrement: true
+        },
         Username: {
             type:DataTypes.STRING,
             unique: {

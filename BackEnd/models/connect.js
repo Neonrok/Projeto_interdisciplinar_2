@@ -29,8 +29,9 @@ const sequelize = new Sequelize(
 const bd = {}; 
 bd.sequelize = sequelize;
 //Defenições de dependencias para o sequelize usar o my sql
-/*bd.Perfil = require("./users.model.js")(sequelize, Sequelize.DataTypes);
-bd.Tipo_Cargos = require("./TC.model.js")(sequelize, Sequelize.DataTypes);
+bd.Perfil = require("./users.model.js")(sequelize, Sequelize.DataTypes);
+
+/*bd.Tipo_Cargos = require("./TC.model.js")(sequelize, Sequelize.DataTypes);
 bd.Atividades = require()(sequelize, Sequelize.DataTypes);
 
 
