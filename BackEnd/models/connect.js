@@ -31,11 +31,8 @@ bd.sequelize = sequelize;
 //Defenições de dependencias para o sequelize usar o my sql
 bd.Perfil = require("./users.model.js")(sequelize, Sequelize.DataTypes);
 bd.Tipo_Cargos = require("./TC.model.js")(sequelize, Sequelize.DataTypes);
+bd.Atividades = require("./Act.model.js")(sequelize, Sequelize.DataTypes);
 /*
-bd.Atividades = require()(sequelize, Sequelize.DataTypes);
-
-
-
 //defenir relações
 bd.Tipo_Cargos.hasMany(bd.Perfil, {foreignKey: 'id_cargo', onDelete: 'RESTRICT', allowNull: false})
 bd.Perfil.belongsTo(bd.Tipo_Cargos, {foreignKey: 'cargo_id', as: 'cargo', onDelete: 'RESTRICT', allowNull: false})
