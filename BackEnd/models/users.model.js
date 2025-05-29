@@ -30,19 +30,12 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         descricao: {
-            
             type: DataTypes.STRING,
             allowNull: true
         },
         cargo_id: {
-            type: DataTypes.ENUM(1, 2, 3, 4, 5, 6),
-            allowNull: false,
-            validate: {
-                isIn: {
-                    args: [[1, 2, 3, 4, 5, 6]],
-                    msg: "Role not recognised"
-                }
-            }
+            type:DataTypes.INTEGER,
+            allowNull: false
         }
     }, {
         timetamps: false
