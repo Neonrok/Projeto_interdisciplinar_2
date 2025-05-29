@@ -32,6 +32,8 @@ bd.sequelize = sequelize;
 bd.Perfil = require("./users.model.js")(sequelize, Sequelize.DataTypes);
 bd.Tipo_Cargos = require("./TC.model.js")(sequelize, Sequelize.DataTypes);
 bd.Atividades = require("./Act.model.js")(sequelize, Sequelize.DataTypes);
+bd.Resposta = require("./resp.model.js")(sequelize, Sequelize.DataTypes);
+
 /*
 //defenir relações
 bd.Tipo_Cargos.hasMany(bd.Perfil, {foreignKey: 'id_cargo', onDelete: 'RESTRICT', allowNull: false})
