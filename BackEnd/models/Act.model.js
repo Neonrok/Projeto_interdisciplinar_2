@@ -24,11 +24,11 @@ module.exports = (sequelize, DataTypes) => {
         body: {
             type:DataTypes.STRING,
             allowNull: false
-        }/*,
+        },
         id_Users: {
             type:DataTypes.STRING,
             allowNull: false
-        }*/
+        }
     }, {
         timetamps: false
     });

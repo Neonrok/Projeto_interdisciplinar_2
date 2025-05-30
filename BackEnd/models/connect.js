@@ -4,7 +4,7 @@ const sequelize = new Sequelize(
     {
         host:process.env.BD_HOST,
         dialect: process.env.BD_DIALECT,
-        port: process.env.PORT,
+        port: process.env.BD_PORT,
         pool: {
             max: 5, // maximum number of connections in pool
             min: 0, // minimum number of connections in pool

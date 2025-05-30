@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         body: {
             type: DataTypes.STRING,
             allowNull: false
-        }/*,
+        },
         id_Users: {
             type:DataTypes.STRING,
             allowNull: false
@@ -24,6 +24,6 @@ module.exports = (sequelize, DataTypes) => {
         id_atividade: {
             type:DataTypes.STRING,
             allowNull: false
-        }*/
+        }
     })
 }
