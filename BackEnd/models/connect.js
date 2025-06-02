@@ -44,10 +44,13 @@ bd.Perfil.hasMany(bd.Atividades, {foreignKey: 'id_Users', onDelete: 'RESTRICT', 
 bd.Atividades.belongsTo(bd.Perfil, {foreignKey: 'id_Users', as: 'Username', onDelete: 'RESTRICT', allowNull: false});
 
 bd.Perfil.hasMany(bd.Resposta, {foreignKey: 'id_Users', onDelete: 'RESTRICT', allowNull: false});
-bd.Resposta.belongsTo(bd.Resposta, {foreignKey: 'id_Users', as: 'Username', onDelete: 'RESTRICT', allowNull: false});
+bd.Resposta.belongsTo(bd.Resposta, {foreignKey: 'id_Users', as: 'User_Act', onDelete: 'RESTRICT', allowNull: false});
 
 bd.Atividades.hasMany(bd.Resposta, {foreignKey: 'id_atividade', onDelete: 'RESTRICT', allowNull: false});
-bd.Resposta.belongsTo(bd.Atividades, {foreignKey: 'id_atividade',as: 'Nome', onDelete: 'RESTRICT', allowNull: false});
+bd.Resposta.belongsTo(bd.Atividades, {foreignKey: 'id_atividade',as: 'Act_Name', onDelete: 'RESTRICT', allowNull: false});
+
+bd.Reuniao.hasMany(bd.Perfil, {foreignKey: 'id_Users', onDelete: 'RESTRICT', allowNull: false});
+bd.Perfil.belongsTo(bd.Reuniao, {foreignKey: 'id_Users',as: 'User_Ren', onDelete: 'RESTRICT', allowNull: false});
 
 (async () => {
     try {
