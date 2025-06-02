@@ -22,11 +22,12 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         id_Users: {
-            type:DataTypes.STRING,
+            type:DataTypes.INTEGER,
             allowNull: false
         }
     }, {
-        timetamps: false
+        timetamps: false,
+        freezeTableName: true
     });
     return Act;
 }
