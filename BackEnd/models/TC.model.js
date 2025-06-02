@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         }
     }, {
-        timetamps: false
+        timestamps: false
     });
     return TC;
 }
