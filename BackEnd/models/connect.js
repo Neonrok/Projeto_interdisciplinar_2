@@ -43,6 +43,12 @@ bd.Perfil.belongsTo(bd.Tipo_Cargos, {foreignKey: 'cargo_id', as: 'cargo', onDele
 bd.Perfil.hasMany(bd.Atividades, {foreignKey: 'id_Users', onDelete: 'RESTRICT', allowNull: false});
 bd.Atividades.belongsTo(bd.Perfil, {foreignKey: 'id_Users', as: 'Username', onDelete: 'RESTRICT', allowNull: false});
 
+bd.Perfil.hasMany(bd.Resposta, {foreignKey: 'id_Users', onDelete: 'RESTRICT', allowNull: false});
+bd.Resposta.belongsTo(bd.Resposta, {foreignKey: 'id_Users', as: 'Username', onDelete: 'RESTRICT', allowNull: false});
+
+bd.Atividades.hasMany(bd.Resposta, {foreignKey: 'id_atividade', onDelete: 'RESTRICT', allowNull: false});
+bd.Resposta.belongsTo(bd.Atividades, {foreignKey: 'id_atividade',as: 'Nome', onDelete: 'RESTRICT', allowNull: false});
+
 (async () => {
     try {
         await bd.sequelize.sync({ alter: true });
