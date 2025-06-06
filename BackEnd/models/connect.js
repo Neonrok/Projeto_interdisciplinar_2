@@ -1,11 +1,10 @@
 const { Sequelize } = require('sequelize');
-console.log(process.env.BD_NAME, process.env.BD_USER, process.env.BD_PASS)
 const sequelize = new Sequelize(
     process.env.BD_NAME, process.env.BD_USER, process.env.BD_PASS,
     {
         host:process.env.BD_HOST,
         dialect: process.env.BD_DIALECT,
-        port: process.env.PORT,
+        port: process.env.BD_PORT,
         pool: {
             max: 5, // maximum number of connections in pool
             min: 0, // minimum number of connections in pool
@@ -31,11 +30,28 @@ const bd = {};
 bd.sequelize = sequelize;
 //Defenições de dependencias para o sequelize usar o my sql
 bd.Perfil = require("./users.model.js")(sequelize, Sequelize.DataTypes);
-/*
+bd.Tipo_Cargos = require("./TC.model.js")(sequelize, Sequelize.DataTypes);
+bd.Atividades = require("./Act.model.js")(sequelize, Sequelize.DataTypes);
+bd.Resposta = require("./resp.model.js")(sequelize, Sequelize.DataTypes);
+bd.Reuniao = require("./reuniao.model.js")(sequelize, Sequelize.DataTypes);
+
+
 //defenir relações
-bd.Tipo_Cargos.hasMany(bd.Perfil, {foreignKey: 'id_cargo', onDelete: 'RESTRICT', allowNull: false})
-bd.Perfil.belongsTo(bd.Tipo_Cargos, {foreignKey: 'cargo_id', as: 'cargo', onDelete: 'RESTRICT', allowNull: false})
-*/
+bd.Tipo_Cargos.hasMany(bd.Perfil, {foreignKey: 'cargo_id', onDelete: 'RESTRICT', allowNull: false});
+bd.Perfil.belongsTo(bd.Tipo_Cargos, {foreignKey: 'cargo_id', as: 'cargo', onDelete: 'RESTRICT', allowNull: false});
+
+bd.Perfil.hasMany(bd.Atividades, {foreignKey: 'id_Users', onDelete: 'RESTRICT', allowNull: false});
+bd.Atividades.belongsTo(bd.Perfil, {foreignKey: 'id_Users', as: 'Username', onDelete: 'RESTRICT', allowNull: false});
+
+bd.Perfil.hasMany(bd.Resposta, {foreignKey: 'id_Users', onDelete: 'RESTRICT', allowNull: false});
+bd.Resposta.belongsTo(bd.Resposta, {foreignKey: 'id_Users', as: 'User_Act', onDelete: 'RESTRICT', allowNull: false});
+
+bd.Atividades.hasMany(bd.Resposta, {foreignKey: 'id_atividade', onDelete: 'RESTRICT', allowNull: false});
+bd.Resposta.belongsTo(bd.Atividades, {foreignKey: 'id_atividade',as: 'Act_Name', onDelete: 'RESTRICT', allowNull: false});
+
+bd.Reuniao.hasMany(bd.Perfil, {foreignKey: 'id_Users', onDelete: 'RESTRICT', allowNull: false});
+bd.Perfil.belongsTo(bd.Reuniao, {foreignKey: 'id_Users',as: 'User_Ren', onDelete: 'RESTRICT', allowNull: false});
+
 (async () => {
     try {
         await bd.sequelize.sync({ alter: true });
@@ -44,6 +60,5 @@ bd.Perfil.belongsTo(bd.Tipo_Cargos, {foreignKey: 'cargo_id', as: 'cargo', onDele
         console.log(error)
     }
 })();
-
 
 module.exports = bd;

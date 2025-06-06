@@ -2,38 +2,26 @@ const { preProcessFile } = require("typescript");
 
 //Explicação como funciona a base de dados para o sequelize
 module.exports = (sequelize, DataTypes) => {
-    const User = sequelize.define('Perfil', {
-        id_Users: {
+    const Resp = sequelize.define('Resposta', {
+        id_resp: {
             type:DataTypes.INTEGER,
             allowNull: false,
             primaryKey: true,
             autoIncrement: true
         },
-        Username: {
-            type:DataTypes.STRING,
-            unique: {
-                args: true,
-                msg: 'Node repetido'
-            },
-            allowNull: false
-        },
-        Email:{
-            type:DataTypes.STRING,
-            unique: {
-                args: true,
-                msg: 'Email repetido'
-            },
-            allowNull: false
-        },
-        P_W: {
+        titulo: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        descricao: {
+        body: {
             type: DataTypes.STRING,
-            allowNull: true
+            allowNull: false
         },
-        cargo_id: {
+        id_Users: {
+            type:DataTypes.INTEGER,
+            allowNull: false
+        },
+        id_atividade: {
             type:DataTypes.INTEGER,
             allowNull: false
         }
@@ -41,5 +29,5 @@ module.exports = (sequelize, DataTypes) => {
         timestamps: false,
         freezeTableName: true
     });
-    return User;
+    return Resp;
 }
