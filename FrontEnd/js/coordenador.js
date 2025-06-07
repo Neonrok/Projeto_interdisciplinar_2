@@ -17,6 +17,10 @@
       });
     };
 
+    function voltarInicio() {
+  window.location.href = "index.html";
+}
+
         function deleteUser(index) {
       if (confirm("Tens a certeza que queres remover este utilizador?")) {
         let users = JSON.parse(localStorage.getItem('users')) || [];
@@ -42,7 +46,7 @@
         titulo,
         descricao,
         categoria,
-        criadoPor: "admin@ecoescolas.com"
+        criadoPor: "coordenador@ecoescolas.com"
       });
 
       localStorage.setItem("projetos", JSON.stringify(projetos));
@@ -84,7 +88,7 @@
 
     window.onload = function () {
 const user = JSON.parse(sessionStorage.getItem("userLogado"));
-if (!user || user.tipo !== "admin") {
+if (!user || user.tipo !== "coordenador") {
   alert("Acesso negado.");
   window.location.href = "login.html";
   return;
