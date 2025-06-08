@@ -1,147 +1,155 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Área de Administração</title>
-  <style>
-    :root {
-      --cor-principal: #2e7d32;
-      --cor-secundaria: #a5d6a7;
-      --cor-fundo: #f1f8e9;
-      --cor-branca: #fff;
-      --cor-borda: #ccc;
-      --sombra: 0 4px 10px rgba(0, 0, 0, 0.05);
-    }
-
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: var(--cor-fundo);
-      margin: 0;
-      padding: 30px;
-      color: #333;
-    }
-
-    h1, h2, h3 {
-      color: var(--cor-principal);
-      margin-top: 30px;
-    }
-
-    .top-buttons {
-      display: flex;
-      justify-content: flex-end;
-      margin-bottom: 20px;
-    }
-
-    .top-buttons button {
-      background-color: var(--cor-principal);
-      color: var(--cor-branca);
-      border: none;
-      padding: 10px 16px;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    .top-buttons button:hover {
-      background-color: #256428;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-      background-color: var(--cor-branca);
-      border-radius: 8px;
-      box-shadow: var(--sombra);
-      overflow: hidden;
-    }
-
-    th, td {
-      padding: 14px;
-      border-bottom: 1px solid var(--cor-borda);
-      text-align: left;
-    }
-
-    th {
-      background-color: var(--cor-secundaria);
-      color: #1b5e20;
-    }
-
-    tr:hover {
-      background-color: #e8f5e9;
-    }
-
-    input {
-      width: 100%;
-      padding: 10px;
-      margin: 8px 0;
-      border: 1px solid var(--cor-borda);
-      border-radius: 6px;
-      box-sizing: border-box;
-    }
-
-    button {
-      background-color: var(--cor-principal);
-      color: var(--cor-branca);
-      border: none;
-      padding: 10px 18px;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #256428;
-    }
-
-    ul#listaProjetos {
-      list-style-type: disc;
-      padding-left: 20px;
-      margin-top: 10px;
-    }
-
-    ul#listaProjetos li {
-      margin-bottom: 6px;
-    }
-
-    hr {
-      margin: 40px 0;
-      border: none;
-      border-top: 1px solid #c8e6c9;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <title>Admin - Eco-Escolas</title>
+  <link rel="stylesheet" href="../css/admin.css">
 </head>
 <body>
-  <div class="top-buttons">
-    <button onclick="logout()">Logout</button>
-  </div>
 
-  <h1>Área de Administração</h1>
+  <header>
+    <h1>Painel do Administrador</h1>
+    <button onclick="logout()">Sair</button>
+  </header>
 
-  <h2>Utilizadores Registados</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Email</th>
-        <th>Palavra-passe</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
-    <tbody id="userTableBody"></tbody>
-  </table>
+  <main>
 
-  <hr>
+    <!-- Criar novo projeto anual -->
+    <section>
+      <h2>Criar Projeto Anual</h2>
+      <input type="text" id="anoProjeto" placeholder="Ano do Projeto">
+      <input type="text" id="descricaoProjeto" placeholder="Descrição">
+      <button onclick="criarProjeto()">Criar Projeto</button>
+      <div id="listaProjetos"></div>
+    </section>
 
-  <h2>Adicionar Novo Projeto</h2>
-  <input type="text" id="tituloProjeto" placeholder="Título do projeto">
-  <input type="text" id="descricaoProjeto" placeholder="Descrição">
-  <input type="text" id="categoriaProjeto" placeholder="Categoria">
-  <button onclick="adicionarProjeto()">Guardar Projeto</button>
+    <!-- Registo de Coordenador -->
+    <section>
+      <h2>Registar Coordenador</h2>
+      <input type="email" id="coordenadorEmail" placeholder="Email do Coordenador">
+      <input type="password" id="coordenadorSenha" placeholder="Senha">
+      <button onclick="registarCoordenador()">Registar</button>
+    </section>
 
-  <h3>Atividades Guardados</h3>
-  <ul id="listaAtividades"></ul>
+    <!-- Backup / Restore -->
+    <section>
+      <h2>Backup e Restore</h2>
+      <button onclick="realizarBackup()">Fazer Backup</button>
+      <button onclick="restaurarBackup()">Restaurar Dados</button>
+      <p id="statusBackup"></p>
+    </section>
 
-  <script src="../js/admin.js"></script>
+    <!-- Definição de Níveis de Projetos -->
+    <section>
+      <h2>Níveis de Projetos</h2>
+      <input type="text" id="nomeNivel" placeholder="Nome do Nível">
+      <input type="text" id="descricaoNivel" placeholder="Descrição do Nível">
+      <button onclick="criarNivelProjeto()">Criar Nível</button>
+      <div id="listaNiveis"></div>
+    </section>
+
+  </main>
+
+  <script>
+    // Simulação básica de dados em localStorage
+
+    function logout() {
+      sessionStorage.removeItem("userLogado");
+      window.location.href = "login.html";
+    }
+
+    function criarProjeto() {
+      const ano = document.getElementById("anoProjeto").value.trim();
+      const descricao = document.getElementById("descricaoProjeto").value.trim();
+
+      if (ano && descricao) {
+        const projetos = JSON.parse(localStorage.getItem("projetos")) || [];
+        projetos.push({ ano, descricao });
+        localStorage.setItem("projetos", JSON.stringify(projetos));
+        alert("Projeto criado com sucesso!");
+        document.getElementById("anoProjeto").value = "";
+        document.getElementById("descricaoProjeto").value = "";
+        listarProjetos();
+      } else {
+        alert("Preencha todos os campos do projeto.");
+      }
+    }
+
+    function listarProjetos() {
+      const container = document.getElementById("listaProjetos");
+      const projetos = JSON.parse(localStorage.getItem("projetos")) || [];
+      container.innerHTML = "<ul>" + projetos.map(p => `<li><strong>${p.ano}</strong>: ${p.descricao}</li>`).join("") + "</ul>";
+    }
+
+    function registarCoordenador() {
+      const email = document.getElementById("coordenadorEmail").value.trim();
+      const senha = document.getElementById("coordenadorSenha").value;
+
+      if (email && senha) {
+        const users = JSON.parse(localStorage.getItem("users")) || [];
+        users.push({ email, password: senha, tipo: "coordenador" });
+        localStorage.setItem("users", JSON.stringify(users));
+        alert("Coordenador registado com sucesso!");
+        document.getElementById("coordenadorEmail").value = "";
+        document.getElementById("coordenadorSenha").value = "";
+      } else {
+        alert("Preencha todos os campos.");
+      }
+    }
+
+    function realizarBackup() {
+      const backup = {
+        users: localStorage.getItem("users"),
+        projetos: localStorage.getItem("projetos"),
+        niveis: localStorage.getItem("niveisProjetos")
+      };
+      localStorage.setItem("backup", JSON.stringify(backup));
+      document.getElementById("statusBackup").innerText = "Backup realizado com sucesso!";
+    }
+
+    function restaurarBackup() {
+      const backup = JSON.parse(localStorage.getItem("backup"));
+      if (backup) {
+        localStorage.setItem("users", backup.users);
+        localStorage.setItem("projetos", backup.projetos);
+        localStorage.setItem("niveisProjetos", backup.niveis);
+        document.getElementById("statusBackup").innerText = "Dados restaurados!";
+        listarProjetos();
+        listarNiveis();
+      } else {
+        alert("Nenhum backup encontrado.");
+      }
+    }
+
+    function criarNivelProjeto() {
+      const nome = document.getElementById("nomeNivel").value.trim();
+      const descricao = document.getElementById("descricaoNivel").value.trim();
+
+      if (nome && descricao) {
+        const niveis = JSON.parse(localStorage.getItem("niveisProjetos")) || [];
+        niveis.push({ nome, descricao });
+        localStorage.setItem("niveisProjetos", JSON.stringify(niveis));
+        alert("Nível criado com sucesso!");
+        document.getElementById("nomeNivel").value = "";
+        document.getElementById("descricaoNivel").value = "";
+        listarNiveis();
+      } else {
+        alert("Preencha todos os campos do nível.");
+      }
+    }
+
+    function listarNiveis() {
+      const container = document.getElementById("listaNiveis");
+      const niveis = JSON.parse(localStorage.getItem("niveisProjetos")) || [];
+      container.innerHTML = "<ul>" + niveis.map(n => `<li><strong>${n.nome}</strong>: ${n.descricao}</li>`).join("") + "</ul>";
+    }
+
+    // Ao carregar a página
+    window.onload = () => {
+      listarProjetos();
+      listarNiveis();
+    };
+  </script>
+
 </body>
 </html>

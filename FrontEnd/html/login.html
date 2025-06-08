@@ -11,34 +11,63 @@
 
     <!-- Login de Utilizador -->
     <div id="login-container">
-  <input type="email" id="userEmail" placeholder="Email">
-  <input type="password" id="userPassword" placeholder="Senha">
-  <button onclick="loginUser()">Entrar</button>
-</div>
+      <input type="email" id="userEmail" placeholder="Email">
+      <input type="password" id="userPassword" placeholder="Senha">
+      <button onclick="loginUser()">Entrar</button>
+    </div>
 
     <!-- Registo -->
-<div id="signup-container" class="hidden">
-  <input type="email" id="newEmail" placeholder="Novo email">
-  <input type="password" id="newPassword" placeholder="Nova senha">
-  <button onclick="signUpUser()">Registar</button>
+    <div id="signup-container" class="hidden">
+      <input type="email" id="newEmail" placeholder="Novo email">
+      <input type="password" id="newPassword" placeholder="Nova senha">
+      <button onclick="signUpUser()">Registar</button>
+    </div>
+
+    <!-- Login de Coordenador -->
+    <div id="coordenador-login-container" class="hidden">
+      <input type="email" id="coordenadorEmail" placeholder="coordenador@ecoescolas.com">
+      <input type="password" id="coordenadorPassword" placeholder="coordenador123">
+      <button onclick="loginCoordenador()">Entrar como coordenador</button>
+    </div>
+
+    <!-- Login de Conselho -->
+    <div id="conselho-login-container" class="hidden">
+      <input type="email" id="conselhoEmail" placeholder="conselho@ecoescolas.com">
+      <input type="password" id="conselhoPassword" placeholder="conselho123">
+      <button onclick="loginConselho()">Entrar como Conselho</button>
+    </div>
+
+    <!-- Login do Secretariado -->
+<div id="secretariado-login-container" class="hidden">
+  <input type="email" id="secretariadoEmail" placeholder="secretariado@ecoescolas.com">
+  <input type="password" id="secretariadoPassword" placeholder="secret123">
+  <button onclick="loginSecretariado()">Entrar como Secretariado</button>
 </div>
 
-    <!-- Login de Admin -->
+<!-- Login do Admin -->
 <div id="admin-login-container" class="hidden">
   <input type="email" id="adminEmail" placeholder="admin@ecoescolas.com">
   <input type="password" id="adminPassword" placeholder="admin123">
   <button onclick="loginAdmin()">Entrar como Admin</button>
 </div>
 
-    <!-- Mensagens de Erro -->
+
+    <!-- Mensagens -->
     <div id="error-message" class="hidden"></div>
     <div id="success-message" class="hidden"></div>
 
-<button onclick="showSignUp()">Criar conta</button>
-<button onclick="showAdminLogin()">Admin</button>
-<button onclick="loginGuest()">Entrar como Convidado</button>
+    <!-- Botões de Alternância -->
+    <button onclick="showSignUp()">Criar conta</button>
+    <button onclick="showCoordenadorLogin()">Coordenador</button>
+    <button onclick="showConselhoLogin()">Conselho</button>
+    <button onclick="showSecretariadoLogin()">Secretariado</button>
+    <button onclick="showAdminLogin()">Admin</button>
+    <button onclick="loginGuest()">Entrar como Convidado</button>
 
-  <script src="../js/login.js"> </script>
+
+  </div>
+
+  <script src="../js/login.js"></script>
 
 </body>
 </html>

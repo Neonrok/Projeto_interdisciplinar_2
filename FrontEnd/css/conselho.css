@@ -1,0 +1,86 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: url('../img/bg-transparente.png') no-repeat center center fixed;
+  background-size: cover;
+  backdrop-filter: blur(4px);
+  padding: 20px;
+}
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+      font-weight: bold;
+    }
+    
+header {
+  background-color: rgba(46, 125, 50, 0.9);
+  padding: 20px;
+  text-align: center;
+  color: white;
+  border-radius: 10px;
+  margin-bottom: 30px;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+  margin-bottom: 15px;
+  color: #2e7d32;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+input, textarea, button {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+button {
+  background-color: #2e7d32;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #1b5e20;
+}
+
+ul {
+  list-style-type: none;
+  margin-top: 15px;
+  padding-left: 0;
+}
+
+ul li {
+  background-color: #e8f5e9;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-left: 4px solid #66bb6a;
+  border-radius: 4px;
+}

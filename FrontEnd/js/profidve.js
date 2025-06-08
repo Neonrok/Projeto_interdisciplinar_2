@@ -116,10 +116,16 @@ document.getElementById('logoutBtn').addEventListener('click', () => {
   window.location.href = 'login.html';
 });
 
+ document.getElementById("viewUsersBtn").addEventListener("click", function() {
+    window.location.href = "admin.html";
+  });
+
+  
 // Evento para entrar na área administrativa (só admins)
 document.getElementById('adminBtn').addEventListener('click', () => {
   window.location.href = 'admin.html'; // Ajuste para o caminho correto da página admin
 });
+
 
 // Inicializar página
 window.addEventListener('DOMContentLoaded', () => {

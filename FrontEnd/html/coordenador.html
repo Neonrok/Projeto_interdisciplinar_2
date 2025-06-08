@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Área de Administração</title>
+  <link rel="stylesheet" href="../css/admin.css" />
+
+</head>
+<body>
+  <div class="top-buttons">
+    <button onclick="logout()">Logout</button>
+    <button onclick="voltarInicio()" id="btn-inicio">Início</button>
+  </div>
+
+  <h1>Área de Administração</h1>
+
+  <h2>Utilizadores Registados</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>Palavra-passe</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody id="userTableBody"></tbody>
+  </table>
+
+  <hr>
+
+  <h2>Adicionar Novo Projeto</h2>
+  <input type="text" id="tituloProjeto" placeholder="Título do projeto">
+  <input type="text" id="descricaoProjeto" placeholder="Descrição">
+  <input type="text" id="categoriaProjeto" placeholder="Categoria">
+  <button onclick="adicionarProjeto()">Guardar Projeto</button>
+
+  <h3>Atividades Guardados</h3>
+  <ul id="listaAtividades"></ul>
+
+  <script src="../js/coordenador.js"></script>
+</body>
+</html>
