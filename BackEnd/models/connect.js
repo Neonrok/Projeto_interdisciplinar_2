@@ -35,6 +35,7 @@ bd.Reuniao = require("./reuniao.model.js")(sequelize, Sequelize.DataTypes);
 bd.inscrits_Act = require("./Insc_act.model.js")(sequelize, Sequelize.DataTypes);
 bd.convites_ren = require("./convites_ren.model.js")(sequelize, Sequelize.DataTypes);
 bd.Atas_ren = require("./Atas_ren.model.js")(sequelize, Sequelize.DataTypes);
+bd.Atas_Ats = require("./Atas_Ats.model.js")(sequelize, Sequelize.DataTypes);
 
 
 
@@ -61,6 +62,8 @@ bd.convites_ren.belongsTo(bd.Reuniao, {foreignKey: 'id_reuniao',as: 'Ren_conv', 
 bd.Reuniao.hasMany(bd.Atas_ren, {foreignKey: 'id_reuniao', onDelete: 'RESTRICT', allowNull: false})
 bd.Atas_ren.belongsTo(bd.Reuniao, {foreignKey: 'id_reuniao',as: 'Rel_Ren', onDelete: 'RESTRICT', allowNull: false})
 
+bd.Atividades.hasMany(bd.Atas_Ats, {foreignKey: 'id_atividade', onDelete: 'RESTRICT', allowNull: false})
+bd.Atas_Ats.belongsTo(bd.Atividades, {foreignKey: 'id_atividade',as: 'Rel_Act', onDelete: 'RESTRICT', allowNull: false})
 
 (async () => {
     try {
