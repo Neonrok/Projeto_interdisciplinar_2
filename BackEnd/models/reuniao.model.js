@@ -20,10 +20,6 @@ module.exports = (sequelize, DataTypes) => {
         dat: {
             type:DataTypes.DATE,
             allowNull: false
-        },
-        id_Users: {
-            type:DataTypes.INTEGER,
-            allowNull: false
         }
     }, {
         timestamps: false,
