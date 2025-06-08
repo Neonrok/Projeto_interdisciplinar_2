@@ -2,39 +2,21 @@ const { preProcessFile } = require("typescript");
 
 //Explicação como funciona a base de dados para o sequelize
 module.exports = (sequelize, DataTypes) => {
-    const Act = sequelize.define('Atividades', {
-        id_atividade: {
+    const Inact = sequelize.define('convites_ren', {
+        id_reuniao: {
             type:DataTypes.INTEGER,
-            allowNull: false,
-            primaryKey: true,
-            autoIncrement: true
-        },
-        d_inicio: {
-            type:DataTypes.DATEONLY,
-            allowNull: false
-        },
-        d_fim: {
-            type:DataTypes.DATEONLY,
-            allowNull: false
-        },
-        titulo: {
-            type:DataTypes.STRING,
-            allowNull: false
-        },
-        body: {
-            type:DataTypes.STRING,
             allowNull: false
         },
         id_Users: {
             type:DataTypes.INTEGER,
             allowNull: false
         },
-        aprovado: {
+        inscrito: {
             type:DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: false
         },
-        completo: {
+        presente: {
             type:DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: false
@@ -43,5 +25,5 @@ module.exports = (sequelize, DataTypes) => {
         timestamps: false,
         freezeTableName: true
     });
-    return Act;
+    return Inact;
 }
