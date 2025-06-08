@@ -59,11 +59,11 @@ bd.convites_ren.belongsTo(bd.Perfil, {foreignKey: 'id_Users',as: 'User_Conv', on
 bd.Reuniao.hasMany(bd.convites_ren, {foreignKey: 'id_reuniao', onDelete: 'RESTRICT', allowNull: false});
 bd.convites_ren.belongsTo(bd.Reuniao, {foreignKey: 'id_reuniao',as: 'Ren_conv', onDelete: 'RESTRICT', allowNull: false});
 
-bd.Reuniao.hasMany(bd.Atas_ren, {foreignKey: 'id_reuniao', onDelete: 'RESTRICT', allowNull: false})
-bd.Atas_ren.belongsTo(bd.Reuniao, {foreignKey: 'id_reuniao',as: 'Rel_Ren', onDelete: 'RESTRICT', allowNull: false})
+bd.Reuniao.hasMany(bd.Atas_ren, {foreignKey: 'id_reuniao', onDelete: 'RESTRICT', allowNull: false});
+bd.Atas_ren.belongsTo(bd.Reuniao, {foreignKey: 'id_reuniao',as: 'Rel_Ren', onDelete: 'RESTRICT', allowNull: false});
 
-bd.Atividades.hasMany(bd.Atas_Ats, {foreignKey: 'id_atividade', onDelete: 'RESTRICT', allowNull: false})
-bd.Atas_Ats.belongsTo(bd.Atividades, {foreignKey: 'id_atividade',as: 'Rel_Act', onDelete: 'RESTRICT', allowNull: false})
+bd.Atividades.hasMany(bd.Atas_Ats, {foreignKey: 'id_atividade', onDelete: 'RESTRICT', allowNull: false});
+bd.Atas_Ats.belongsTo(bd.Atividades, {foreignKey: 'id_atividade',as: 'Rel_Act', onDelete: 'RESTRICT', allowNull: false});
 
 (async () => {
     try {
