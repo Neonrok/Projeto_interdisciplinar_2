@@ -33,6 +33,7 @@ bd.Perfil = require("./users.model.js")(sequelize, Sequelize.DataTypes);
 bd.Atividades = require("./Act.model.js")(sequelize, Sequelize.DataTypes);
 bd.Reuniao = require("./reuniao.model.js")(sequelize, Sequelize.DataTypes);
 bd.inscrits_Act = require("./Insc_act.model.js")(sequelize, Sequelize.DataTypes);
+bd.convites_ren = require("./convites_ren.model.js")(sequelize, Sequelize.DataTypes);
 
 
 
@@ -44,9 +45,17 @@ bd.Atividades.belongsTo(bd.Perfil, {foreignKey: 'id_Users', as: 'Username', onDe
 bd.Perfil.hasMany(bd.Reuniao, {foreignKey: 'id_Users', onDelete: 'RESTRICT', allowNull: false});
 bd.Reuniao.belongsTo(bd.Perfil, {foreignKey: 'id_Users',as: 'User_Ren', onDelete: 'RESTRICT', allowNull: false});
 
-bd.inscrits_Act.hasMany(bd.Perfil, {foreignKey: 'id_Users', onDelete: 'RESTRICT', allowNull: false});
-bd.Perfil.belongsTo(bd.inscrits_Act, {foreignKey: 'id_Users',as: 'User_Ren', onDelete: 'RESTRICT', allowNull: false});
+bd.Perfil.hasMany(bd.inscrits_Act, {foreignKey: 'id_Users', onDelete: 'RESTRICT', allowNull: false});
+bd.inscrits_Act.belongsTo(bd.Perfil, {foreignKey: 'id_Users',as: 'User_Insc', onDelete: 'RESTRICT', allowNull: false});
 
+bd.Atividades.hasMany(bd.inscrits_Act, {foreignKey: 'id_atividade', onDelete: 'RESTRICT', allowNull: false});
+bd.inscrits_Act.belongsTo(bd.Atividades, {foreignKey: 'id_atividade',as: 'Act_Insc', onDelete: 'RESTRICT', allowNull: false});
+
+bd.Perfil.hasMany(bd.convites_ren, {foreignKey: 'id_Users', onDelete: 'RESTRICT', allowNull: false});
+bd.convites_ren.belongsTo(bd.Perfil, {foreignKey: 'id_Users',as: 'User_Conv', onDelete: 'RESTRICT', allowNull: false});
+
+bd.Reuniao.hasMany(bd.convites_ren, {foreignKey: 'id_reuniao', onDelete: 'RESTRICT', allowNull: false});
+bd.convites_ren.belongsTo(bd.Reuniao, {foreignKey: 'id_reuniao',as: 'Ren_conv', onDelete: 'RESTRICT', allowNull: false});
 
 
 
