@@ -1,7 +1,6 @@
 const db = require('../models/connect.js');
 const User = db.Perfil;
 
-const { Op } = require('sequelize');
 const { ErrorHandler } = require("../utils/error.js");
 
 /*
@@ -13,12 +12,16 @@ let getInfosFromUser = async (req, res, next) => {
 
     try {
         const id_Users = req.path;
-        const where = {};
-        let int = id_Users.replace("/", "")
-        console.log(int)
-        if ( Number(int) === NaN ) {
-            throw new ErrorHandler(400, `Invalid value for published: ${published}. It should be either 'true' or 'false'.`);}
-        where.id_Users  = { [Op.like]: `%${Number(int)}%`}
+        let int = await User.findByPk(id_Users.replace("/", ""), {
+            attributes: ['id_Users', 'Username', 'descricao', 'membro', 'secretariado', 'coordenador', 'admin'],
+        });
+        console.log(User.findByPk(req.path));
+        if (!id_Users) 
+            throw new ErrorHandler(404,`Cannot find any USER with ID ${req.params.id}.`);
+
+        return res.status(200).json({
+            data: int
+        });
     }
     catch (err) {
         next(err);//Em caso do erro passará para o proximo
