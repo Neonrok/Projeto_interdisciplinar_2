@@ -65,13 +65,13 @@ bd.Atas_ren.belongsTo(bd.Reuniao, {foreignKey: 'id_reuniao',as: 'Rel_Ren', onDel
 bd.Atividades.hasMany(bd.Atas_Ats, {foreignKey: 'id_atividade', onDelete: 'RESTRICT', allowNull: false});
 bd.Atas_Ats.belongsTo(bd.Atividades, {foreignKey: 'id_atividade',as: 'Rel_Act', onDelete: 'RESTRICT', allowNull: false});
 
-(async () => {
-    try {
-        await bd.sequelize.sync({ alter: true });
-        console.log('DB is successfully synchronized')
-    } catch (error) {
-        console.log(error)
-    }
-})();
+// (async () => {
+//     try {
+//         await bd.sequelize.sync({ alter: true });
+//         console.log('DB is successfully synchronized')
+//     } catch (error) {
+//         console.log(error)
+//     }
+// })();
 
 module.exports = bd;

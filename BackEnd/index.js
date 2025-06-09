@@ -23,6 +23,8 @@ app.use((req, res, next) => {
 //para fazer os verbos do post
 app.use('/Users', require('./routes/perfil.js'));
 
+//app.use('/Atividades', require('./routes/Atividades.js'));
+
 
 
 

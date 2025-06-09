@@ -11,16 +11,13 @@ verbos
 let getInfosFromUser = async (req, res, next) => {
 
     try {
-        const id_Users = req.path;
-        let int = await User.findByPk(id_Users.replace("/", ""), {
-            attributes: ['id_Users', 'Username', 'descricao', 'membro', 'secretariado', 'coordenador', 'admin'],
-        });
-        console.log(User.findByPk(req.path));
+        const id_Users = await User.findByPk(req.params.id);
+        //let int = await User.findByPk(id_Users.replace("/", ""), {attributes: ['id_Users', 'Username', 'descricao', 'membro', 'secretariado', 'coordenador', 'admin'],});
         if (!id_Users) 
             throw new ErrorHandler(404,`Cannot find any USER with ID ${req.params.id}.`);
 
         return res.status(200).json({
-            data: int
+            data: id_Users
         });
     }
     catch (err) {
