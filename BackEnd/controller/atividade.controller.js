@@ -4,11 +4,12 @@ const Atividades = db.Atividades;
 const { Op } = require('sequelize');
 
 const { ErrorHandler } = require("../utils/error.js");
+const { post } = require('../routes/perfil.js');
 
 let All_Acts_get = async (req, res, next) => {
 
     try {
-        const {id_atividade, titulo, aprovado, completo, page = 1, limit = 10} = req.query;
+        const { titulo, aprovado, completo, page = 1, limit = 10} = req.query;
         const where = {};
 
         if (aprovado !== undefined) {
@@ -47,7 +48,28 @@ let All_Acts_get = async (req, res, next) => {
             raw: true
         })
 
-        return res.status(200).json({})
+        Acts.rows.forEach(Acts => {
+            post.links = [
+                { rel: "self", href: `/Atividades/${Acts.id_atividade}`, method: "GET" },
+                { rel: "delete", href: `/Atividades/${Acts.id_atividade}`, method: "DELETE" },
+                { rel: "modify", href: `/Atividades/${Acts.id_atividade}`, method: "PUT" },
+            ]
+        });
+
+        return res.status(200).json({
+            totalPages: Math.ceil(Acts.count / limit),
+            currentPage: page ? page : 0,
+            total: Acts.count,
+            data: Acts.rows,
+            links: [
+                { "rel": "add-post", "href": `/Atividades`, "method": "POST" },
+                // ... JS spread operator: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
+                // only add the previous page link if the current page is greater than 1
+                ...(page > 1 ? [{ "rel": "previous-page", "href": `/Atividades?limit=${limit}&page=${page - 1}`, "method": "GET" }] : []),
+                // only add the next page link if there are more pages to show
+                ...(Acts.count > page * limit ? [{ "rel": "next-page", "href": `/Atividades?limit=${limit}&page=${+page + 1}`, "method": "GET" }] : [])
+            ]
+        })
     } 
     catch (err) {
         next(err);
