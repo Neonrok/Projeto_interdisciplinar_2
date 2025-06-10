@@ -63,10 +63,7 @@ let All_Acts_get = async (req, res, next) => {
             data: Acts.rows,
             links: [
                 { "rel": "add-post", "href": `/Atividades`, "method": "POST" },
-                // ... JS spread operator: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
-                // only add the previous page link if the current page is greater than 1
                 ...(page > 1 ? [{ "rel": "previous-page", "href": `/Atividades?limit=${limit}&page=${page - 1}`, "method": "GET" }] : []),
-                // only add the next page link if there are more pages to show
                 ...(Acts.count > page * limit ? [{ "rel": "next-page", "href": `/Atividades?limit=${limit}&page=${+page + 1}`, "method": "GET" }] : [])
             ]
         })
