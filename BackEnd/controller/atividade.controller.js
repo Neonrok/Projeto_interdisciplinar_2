@@ -30,9 +30,6 @@ let All_Acts_get = async (req, res, next) => {
 
         if (titulo) where.titulo = { [Op.like]: `%${titulo}%` };
 
-        const sortField = sort === 'views' ? 'views' : 'id';
-        const sortOrder = order === 'desc' ? 'DESC' : 'ASC';
-
 
         if (isNaN(page) || page < 1) 
             throw new ErrorHandler(400, `Invalid value for page: ${page}. It should be a positive integer.`);
@@ -42,7 +39,6 @@ let All_Acts_get = async (req, res, next) => {
         
         const Acts = await Atividades.findAndCountAll({
             where,
-            order: [[sortField, sortOrder]],
             limit: +limit,
             offset: (+page - 1) * +limit,
             raw: true
@@ -76,9 +72,16 @@ let All_Acts_get = async (req, res, next) => {
 
 let Act_Infus_get = async (req, res, next) => {
 
-    try {} 
+    try {
+        const Acts = await Atividades.findByPk(req.params.id);
+        if (!Acts) 
+            throw new ErrorHandler(404,`Cannot find any activity with ID ${req.params.id}.`);
+
+        return res.status(200).json({
+            data: Acts
+        });
+    } 
     catch (err) {
-        console.log("rota não inplumentada")
         next(err);
     }
 }
