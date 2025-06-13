@@ -167,6 +167,62 @@ let Add_Act_post = async (req, res, next) => {
     }
 }
 
+let ModifyActivity = async (req, res, next) => {
+    try {
+        // sequelize update method allows PARTIAL updates, so we NEED to check for missing fields 
+        
+        if (req.body.id_Users === undefined) {
+            let error = new Error(`Your access token has expired! Please login again.`);
+            error.statusCode = 401;
+            return next(error);
+        }
+
+        const author = await db.Perfil.findByPk(req.body.id_Users);
+
+        if (author === null) {
+            throw new ErrorHandler(404, `Cannot find any USER with ID ${req.body.id_Users}.`);
+        }
+
+        if (!author.membro && !author.admin) {//alterar depois isto está estranho
+            throw new ErrorHandler(403, `You are not alowed to do this action.`);
+        };
+
+        let missingFields = [];
+        if (req.body.title === undefined) missingFields.push('title');
+        if (req.body.body === undefined) missingFields.push('body');
+
+        if (req.body.d_inicio === undefined) missingFields.push('d_inicio');
+        if (req.body.d_fim === undefined) missingFields.push('d_fim');
+        
+        let dataI = new Date(req.body.d_inicio);
+        let dataF = new Date(req.body.d_fim);
+        if ((dataI == "Invalid Date") || (dataF == "Invalid Date")) {
+            let error = new Error(`isso não é uma data.`);
+            error.statusCode = 400;
+            return next(error);
+        }
+
+        if (missingFields.length > 0) 
+           throw new ErrorHandler(400, `Missing required fields: ${missingFields.join(', ')}`);
+          
+        // update post in database given its id, using the Post model
+        const post = await Atividades.findByPk(req.params.id);
+        // If not found, return 404 
+        if (!post) 
+            throw new ErrorHandler(404, `Cannot find any POST with ID ${req.params.id}.`);
+
+        // update the post with the new data
+        await post.update(req.body);
+
+        // send 204 No Content response
+        res.status(204).json();
+    }
+    catch (err) {
+        // Handle Sequelize validation error or other errors to handler middleware
+        next(err)
+    }
+}
+
 let deleteAct = async (req, res, next) => {
     try {
         // delete a post in database given its id, using the Post model
