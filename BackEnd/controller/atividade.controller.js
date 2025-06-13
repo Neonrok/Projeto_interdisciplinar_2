@@ -167,6 +167,26 @@ let Add_Act_post = async (req, res, next) => {
     }
 }
 
+let deleteAct = async (req, res, next) => {
+    try {
+        // delete a post in database given its id, using the Post model
+        let result1 = await Atividades.destroy({ where: { id_atividade: req.params.id } });
+        let result2 = await Atividades.destroy({ where: { id_atividade: req.params.id } });
+        // the promise returns the number of deleted rows
+        if (result1 == 0) 
+           throw new ErrorHandler(404,`Cannot find any Activity with ID ${req.params.id}.`);
+        
+        if (result2 == 0) 
+           throw new ErrorHandler(404,`Cannot find any Activity relatory with ID ${req.params.id}.`);
+        
+        // send 204 No Content respons
+        res.status(204).json();
+    }
+    catch (err) {
+        next(err); // Pass the error to the next middleware
+    }
+}
+
 module.exports = {
-    All_Acts_get, Act_Infus_get, Add_Act_post
+    All_Acts_get, Act_Infus_get, Add_Act_post, deleteAct
 }
