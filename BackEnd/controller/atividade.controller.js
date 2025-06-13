@@ -1,5 +1,6 @@
 const db = require('../models/connect.js');
 const Atividades = db.Atividades;
+const Atas_Ats = db.Atas_Ats;
 
 const { Op } = require('sequelize');
 
@@ -117,8 +118,6 @@ let Add_Act_post = async (req, res, next) => {
 
         let dataI = new Date(req.body.d_inicio);
         let dataF = new Date(req.body.d_fim);
-        console.log(dataI);
-        console.log(dataF);
         if ((dataI == "Invalid Date") || (dataF == "Invalid Date")) {
             let error = new Error(`isso não é uma data.`);
             error.statusCode = 400;
@@ -145,8 +144,12 @@ let Add_Act_post = async (req, res, next) => {
             return next(error);
         }
 
+        const post = await Atividades.create(req.body);
+        
+        console.log(post.id_atividade)
+        let ab = {id_atividade: post.id_atividade}
+        const post_rel = await Atas_Ats.create(ab)
 
-        /*const post = await Post.create(req.body);
         res.status(201).json({
             msg: "Post successfully created.",
             //add HATEOAS links to the created post
@@ -158,7 +161,7 @@ let Add_Act_post = async (req, res, next) => {
                 { rel: "add-tags", href: `/posts/${post.id}/tags`, method: "POST" },
 
             ]
-        });*/
+        });
     } catch (err) {
         next(err)
     }
