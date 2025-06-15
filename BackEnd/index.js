@@ -22,18 +22,8 @@ app.use((req, res, next) => {
 
 //para fazer os verbos do post
 app.use('/Users', require('./routes/perfil.js'));
-
 app.use('/Atividades', require('./routes/Atividades.js'));
 
-
-
-
-
-
-
-//Base da API REST que redireciona para outro arquivo com base nas rotas
-//Rota dos parametros do /users
-app.use('/users', require('./routes/perfil.js'));
 
 //Caso não seja encontrado manda o erro404    
 app.use((req, res, next) => {

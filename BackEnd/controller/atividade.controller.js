@@ -53,7 +53,7 @@ let All_Acts_get = async (req, res, next) => {
             ]
         });
 
-        return res.status(200).json({
+        res.status(200).json({
             totalPages: Math.ceil(Acts.count / limit),
             currentPage: page ? page : 0,
             total: Acts.count,
@@ -244,5 +244,5 @@ let deleteAct = async (req, res, next) => {
 }
 
 module.exports = {
-    All_Acts_get, Act_Infus_get, Add_Act_post, deleteAct
+    All_Acts_get, Act_Infus_get, Add_Act_post, deleteAct,ModifyActivity
 }

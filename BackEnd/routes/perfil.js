@@ -1,7 +1,7 @@
 //Requesitos do express
 const express = require('express');
 const usersController = require('../controller/users.controller.js');
-const authController = require("../controllers/auth.controller.js");
+const authController = require("../controller/auth.controller.js");
 
 const router = express.Router();
 
