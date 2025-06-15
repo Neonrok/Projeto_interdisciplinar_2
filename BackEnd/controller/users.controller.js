@@ -8,7 +8,27 @@ aqui será o local onde serão colodos todos os argonetos dos os acessos pelos
 verbos
 */
 
-let getInfosFromUser = async (req, res, next) => {
+let create = async (req, res, next) => {
+    try{
+        if (!req.body || !req.body.Username || !req.body.P_W || !req.body.Email)
+            return res.status(400).json({ success: false, msg: "Email, username and password are mandatory" });
+        
+        let user = await User.findOne({ where: { Username: req.body.Username } }); //get user data from DB
+        if (user) return res.status(401).json({ success: false, msg: "esse Username já existe." });
+        
+        // Save user to DB
+        await User.create({
+            Username: req.body.Username, Email: req.body.Email,
+            // hash its password (8 = #rounds – more rounds, more time)
+            P_W: bcrypt.hashSync(req.body.P_W, 10)
+        });
+        return res.status(201).json({ success: true, msg: "User was registered successfully!" });
+    } catch (err) {
+        next(err);
+    };
+};
+
+let getUser = async (req, res, next) => {
 
     try {
         const id_Users = await User.findByPk(req.params.id);
@@ -24,6 +44,22 @@ let getInfosFromUser = async (req, res, next) => {
         next(err);//Em caso do erro passará para o proximo
     }
 };
+
+let geAllUsers = async (req, res, next) => {
+    try {
+        let user = await User.findByPk(req.params.id);
+        if (!user.admin)
+            return res.status(403).json({ 
+                success: false, msg: "This request requires ADMIN role!"
+            });
+        // do not expose users' sensitive data
+        let users = await User.findAll({attributes: {exclude: ['P_W']} })
+        res.status(200).json({ users: users });
+    } catch (err) {
+        next(err);
+    };
+};
+
 module.exports = {
-    getInfosFromUser
+    getUser, create, geAllUsers
 }

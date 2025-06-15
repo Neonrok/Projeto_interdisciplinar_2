@@ -1,17 +1,16 @@
 //Requesitos do express
 const express = require('express');
+const usersController = require('../controller/users.controller.js');
+const authController = require("../controllers/auth.controller.js");
+
 const router = express.Router();
 
-
-//Perguntar sobre isto para a professora
-
-//pelo que eu entendi a rota estaria agora no /user e por
-//isso agora faz é para escolher que tipo de rota está a escolner.
-
-//Função de controlo
-const usersController = require('../controller/users.controller.js');
+router.post('/', usersController.create); //PUBLIC
+router.get('/', authController.verifyToken, usersController.geAllUsers); //para ADMS
 
 // routes for /users requests
-router.get('/:id', usersController.getInfosFromUser); // get all infus about users
+router.get('/:id', usersController.getUser, authController.verifyToken); // get all infus about users
+
+router.post('/login', authController.login); //PUBLIC
 
 module.exports = router;
