@@ -188,19 +188,30 @@ let ModifyActivity = async (req, res, next) => {
         };
 
         let missingFields = [];
-        if (req.body.title === undefined) missingFields.push('title');
+        if (req.body.titulo === undefined) missingFields.push('titulo');
         if (req.body.body === undefined) missingFields.push('body');
 
-        if (req.body.d_inicio === undefined) missingFields.push('d_inicio');
-        if (req.body.d_fim === undefined) missingFields.push('d_fim');
-        
-        let dataI = new Date(req.body.d_inicio);
-        let dataF = new Date(req.body.d_fim);
-        if ((dataI == "Invalid Date") || (dataF == "Invalid Date")) {
-            let error = new Error(`isso não é uma data.`);
-            error.statusCode = 400;
-            return next(error);
+        if (req.body.d_inicio === undefined){
+            missingFields.push('d_inicio');
+        } else {
+            let dataI = new Date(req.body.d_inicio);
+            
+            if ((dataI == "Invalid Date")) {
+                let error = new Error(`isso não é uma data.`);
+                error.statusCode = 400;
+                return next(error);
         }
+        };
+        if (req.body.d_fim === undefined){
+            missingFields.push('d_fim');
+        } else {
+            let dataF = new Date(req.body.d_fim);
+            if ((dataF == "Invalid Date")) {
+                let error = new Error(`isso não é uma data.`);
+                error.statusCode = 400;
+                return next(error);
+            }
+        };
 
         if (missingFields.length > 0) 
            throw new ErrorHandler(400, `Missing required fields: ${missingFields.join(', ')}`);
