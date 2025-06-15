@@ -237,7 +237,7 @@ let ModifyActivity = async (req, res, next) => {
 let deleteAct = async (req, res, next) => {
     try {
         // delete a post in database given its id, using the Post model
-        let result1 = await Atividades.destroy({ where: { id_atividade: req.params.id } });
+        let result1 = await Atas_Ats.destroy({ where: { id_atividade: req.params.id } });
         let result2 = await Atividades.destroy({ where: { id_atividade: req.params.id } });
         // the promise returns the number of deleted rows
         if (result1 == 0) 
