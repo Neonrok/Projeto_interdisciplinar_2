@@ -10,7 +10,7 @@ router.get('/', authController.verifyToken, usersController.geAllUsers); //para 
 
 // routes for /users requests
 router.get('/:id',authController.verifyToken, usersController.getUser ); // get all infus about users
-router.put('/:id', usersController.modUser);
+router.put('/:id',authController.verifyToken, usersController.modUser);
 
 router.post('/login', authController.login); //PUBLIC
 

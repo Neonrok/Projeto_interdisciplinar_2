@@ -54,7 +54,6 @@ let getUser = async (req, res, next) => {
 
 let geAllUsers = async (req, res, next) => {
     try {
-        console.log(req.id)
         let util = await User.findByPk(req.id);
         if (!util.admin)
             throw new ErrorHandler(403, { success: false, msg: "This request requires ADMIN role!" });
@@ -79,7 +78,7 @@ let modUser = async (req, res, next) => {
         console.log(req.id)
         let util = await User.findByPk(req.id);
         console.log(util)
-        if (!util.admin){
+        if (util.admin){
             if (!req.body.membro) {req.body.membro = user.membro};
             if (!req.body.secretariado) {req.body.secretariado = user.secretariado};
             if (!req.body.coordenador) {req.body.coordenador = user.coordenador};
