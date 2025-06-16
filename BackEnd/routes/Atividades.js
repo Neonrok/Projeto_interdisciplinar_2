@@ -11,7 +11,7 @@ router.get('/:id', atividadeController.Act_Infus_get );
 router.put('/:id', authController.verifyToken, atividadeController.ModifyActivity );
 router.delete('/:id', authController.verifyToken, atividadeController.deleteAct );
 
-//router.get('/ins/:id', authController.verifyToken, atividadeController.)
+router.get('/ins/:id', authController.verifyToken, atividadeController.getInsc)
 //router.post('/ins/:id', authController.verifyToken, atividadeController.)
 //router.delete('/ins/:id', authController.verifyToken, atividadeController.)
 

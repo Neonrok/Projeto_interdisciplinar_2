@@ -2,6 +2,7 @@ const db = require('../models/connect.js');
 const Atividades = db.Atividades;
 const Atas_Ats = db.Atas_Ats;
 const USER = db.Perfil;
+const insc = db.inscrits_Act;
 
 const { Op } = require('sequelize');
 
@@ -170,7 +171,7 @@ let ModifyActivity = async (req, res, next) => {
             throw new ErrorHandler(404, `Cannot find any Activity with ID ${req.params.id}.`);
         }
 
-        if ( author.id_Users != Act.id_Users || !author.admin) {
+        if ( author.id_Users != Act.id_Users && !author.admin) {
             throw new ErrorHandler(403, `You are not alowed to do this action.`);
         };
 
@@ -237,11 +238,12 @@ let deleteAct = async (req, res, next) => {
             throw new ErrorHandler(404, `Cannot find any Activity with ID ${req.params.id}.`);
         }
 
-        if ( author.id_Users != Act.id_Users || !author.admin) {
+        if ( author.id_Users != Act.id_Users && !author.admin) {
             throw new ErrorHandler(403, `You are not alowed to do this action.`);
         };
         // delete a post in database given its id, using the Post model
         let result1 = await Atas_Ats.destroy({ where: { id_atividade: req.params.id } });
+        let result3 = await insc.destroy({ where: { id_atividade: req.params.id } });
         let result2 = await Atividades.destroy({ where: { id_atividade: req.params.id } });
         // the promise returns the number of deleted rows
         if (result1 == 0) 
@@ -258,6 +260,52 @@ let deleteAct = async (req, res, next) => {
     }
 }
 
+let getInsc = async (req, res, next) => {
+    try {
+        const author = await USER.findByPk(req.id);
+        const Act = await Atividades.findOne({ where: { id_atividade: req.params.id } });
+
+        if (Act === null) {
+            throw new ErrorHandler(404, `Cannot find any Activity with ID ${req.params.id}.`);
+        }
+
+
+        if ( author.id_Users != Act.id_Users && !author.admin) {
+            throw new ErrorHandler(403, `You are not alowed to do this action.`);
+        };
+
+        const {  page = 1, limit = 12 } = req.query;
+        const where = {id_atividade: req.params.id};
+
+        if (isNaN(page) || page < 1)
+            throw new ErrorHandler(400, `Invalid value for page: ${page}. It should be a positive integer.`);
+
+        if (isNaN(limit) || limit < 1)
+            throw new ErrorHandler(400, `Invalid value for limit: ${limit}. It should be a positive integer.`);
+
+        const Acts = await insc.findAndCountAll({
+            where,
+            limit: +limit,
+            offset: (+page - 1) * +limit,
+            raw: true
+        })
+
+        res.status(200).json({
+            totalPages: Math.ceil(Acts.count / limit),
+            currentPage: page ? page : 0,
+            total: Acts.count,
+            data: Acts.rows,
+            links: [
+                { "rel": "add-post", "href": `/Atividades`, "method": "POST" },
+                ...(page > 1 ? [{ "rel": "previous-page", "href": `/Atividades?limit=${limit}&page=${page - 1}`, "method": "GET" }] : []),
+                ...(Acts.count > page * limit ? [{ "rel": "next-page", "href": `/Atividades?limit=${limit}&page=${+page + 1}`, "method": "GET" }] : [])
+            ]
+        })
+
+    } catch (err) {next(err);}
+}
+
 module.exports = {
-    All_Acts_get, Act_Infus_get, Add_Act_post, deleteAct,ModifyActivity
+    All_Acts_get, Act_Infus_get, Add_Act_post, deleteAct, ModifyActivity,
+    getInsc
 }
