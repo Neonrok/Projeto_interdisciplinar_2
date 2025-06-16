@@ -6,10 +6,10 @@ const authController = require("../controller/auth.controller.js");
 const router = express.Router();
 
 router.post('/', usersController.create); //PUBLIC
-router.get('/', authController.verifyToken, usersController.geAllUsers); //para ADMS
+router.get('/', usersController.geAllUsers, authController.verifyToken); //para ADMS
 
 // routes for /users requests
-router.get('/:id', usersController.getUser, authController.verifyToken); // get all infus about users
+router.get('/:id',authController.verifyToken, usersController.getUser ); // get all infus about users
 
 router.post('/login', authController.login); //PUBLIC
 
