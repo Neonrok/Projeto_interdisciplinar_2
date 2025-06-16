@@ -12,7 +12,7 @@ router.put('/:id', authController.verifyToken, atividadeController.ModifyActivit
 router.delete('/:id', authController.verifyToken, atividadeController.deleteAct );
 
 router.get('/ins/:id', authController.verifyToken, atividadeController.getInsc)
-//router.post('/ins/:id', authController.verifyToken, atividadeController.)
+router.post('/ins', authController.verifyToken, atividadeController.AddInsc)
 //router.delete('/ins/:id', authController.verifyToken, atividadeController.)
 
 module.exports = router;
