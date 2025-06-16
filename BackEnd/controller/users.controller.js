@@ -36,9 +36,12 @@ let getUser = async (req, res, next) => {
 
     try {
         const id_Users = await User.findByPk(req.params.id);
-        //let int = await User.findByPk(id_Users.replace("/", ""), {attributes: ['id_Users', 'Username', 'descricao', 'membro', 'secretariado', 'coordenador', 'admin'],});
-        if (!id_Users || !req.Ad) 
+        let util = await User.findByPk(req.id);
+        if (!id_Users) 
             throw new ErrorHandler(404,`Cannot find any USER with ID ${req.params.id}.`);
+
+        if (util.admin || id_Users.id_Users != util.id_Users)
+            throw new ErrorHandler(403,`This is not you.`);
 
         return res.status(200).json({
             data: id_Users
@@ -51,6 +54,7 @@ let getUser = async (req, res, next) => {
 
 let geAllUsers = async (req, res, next) => {
     try {
+        console.log(req.id)
         let util = await User.findByPk(req.id);
         if (!util.admin)
             throw new ErrorHandler(403, { success: false, msg: "This request requires ADMIN role!" });
@@ -72,10 +76,22 @@ let modUser = async (req, res, next) => {
         if (!user){ 
             throw new ErrorHandler(404, { success: false, msg: "esse Username não existe." });
         }
-        if (!req.body.membro) {req.body.membro = false};
-        if (!req.body.secretariado) {req.body.secretariado = false};
-        if (!req.body.coordenador) {req.body.coordenador = false};
-        if (!req.body.admin) {req.body.admin = false};
+        console.log(req.id)
+        let util = await User.findByPk(req.id);
+        console.log(util)
+        if (!util.admin){
+            if (!req.body.membro) {req.body.membro = user.membro};
+            if (!req.body.secretariado) {req.body.secretariado = user.secretariado};
+            if (!req.body.coordenador) {req.body.coordenador = user.coordenador};
+            if (!req.body.admin) {req.body.admin = user.admin;};
+        } else if(user.id_Users === util.id_Users){
+            req.body.membro = user.membro;
+            req.body.secretariado = user.secretariado;
+            req.body.coordenador = user.coordenador;
+            req.body.admin = user.admin;
+        } else {
+            throw new ErrorHandler(403, { success: false, msg: "Não está permitido a editrar este utilizador" });
+        }
         // update the post with the new data
         await user.update({
             Username: req.body.Username, Email: req.body.Email, P_W: User.P_W,
