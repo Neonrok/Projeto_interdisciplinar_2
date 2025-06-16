@@ -13,6 +13,6 @@ router.delete('/:id', authController.verifyToken, atividadeController.deleteAct 
 
 router.get('/ins/:id', authController.verifyToken, atividadeController.getInsc)
 router.post('/ins', authController.verifyToken, atividadeController.AddInsc)
-//router.delete('/ins/:id', authController.verifyToken, atividadeController.)
+router.delete('/ins', authController.verifyToken, atividadeController.RevInsc)
 
 module.exports = router;

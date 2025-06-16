@@ -333,7 +333,37 @@ let AddInsc = async (req, res, next) => {
     } catch (err) {next(err);}
 }
 
+let RevInsc = async (req, res, next) => {
+    try{
+        const author = await USER.findByPk(req.id);
+        
+        const Act = await Atividades.findByPk(req.body.id_atividade);
+        
+        if (Act === null) {
+            throw new ErrorHandler(404, `Cannot find any Activity with ID ${req.body.id_atividade}.`);
+        }
+
+        if ( author.id_Users != Act.id_Users && !author.admin) {
+            throw new ErrorHandler(403, `You are not alowed to do this action.`);
+        };
+
+        let conv = await USER.findByPk(req.body.id_Users);
+        if (conv === null) {
+            throw new ErrorHandler(404, `Cannot find any user with ID ${req.params.id}.`);
+        }
+        const found = await insc.findOne({where: {id_atividade: req.body.id_atividade, id_Users:req.body.id_Users}});
+        if (found === null) {
+            throw new ErrorHandler(404, `Invit Not Found.`);
+        }
+
+        const post = await insc.destroy({ where: {id_atividade: req.body.id_atividade, id_Users:req.body.id_Users} });
+
+        res.status(204).json(post);
+
+    } catch (err) {next(err);}
+}
+
 module.exports = {
     All_Acts_get, Act_Infus_get, Add_Act_post, deleteAct, ModifyActivity,
-    getInsc, AddInsc
+    getInsc, AddInsc, RevInsc 
 }
