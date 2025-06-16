@@ -91,10 +91,6 @@ let Add_Act_post = async (req, res, next) => {
     try {
         const author = await db.Perfil.findByPk(req.id);
 
-        if (author === null) {
-            throw new ErrorHandler(404, `Cannot find any USER with ID ${req.body.id_Users}.`);
-        }
-
         if (!author.membro && !author.admin) {
             throw new ErrorHandler(403, `You are not alowed to do this action.`);
         } else { req.body.id_Users = req.id};
@@ -168,13 +164,13 @@ let ModifyActivity = async (req, res, next) => {
 
         const author = await USER.findByPk(req.id);
 
-        const user = await USER.findOne({ where: { id_Users: req.body.id_Users } });
+        const Act = await Atividades.findOne({ where: { id_atividade: req.params.id } });
 
-        if (author === null) {
-            throw new ErrorHandler(404, `Cannot find any USER with ID ${req.body.id_Users}.`);
+        if (Act === null) {
+            throw new ErrorHandler(404, `Cannot find any Activity with ID ${req.params.id}.`);
         }
 
-        if ( author.id_Users === user.id_Users && !author.admin) {//alterar depois isto está estranho
+        if ( author.id_Users != Act.id_Users || !author.admin) {
             throw new ErrorHandler(403, `You are not alowed to do this action.`);
         };
 
@@ -212,6 +208,13 @@ let ModifyActivity = async (req, res, next) => {
         // If not found, return 404 
         if (!post) 
             throw new ErrorHandler(404, `Cannot find any POST with ID ${req.params.id}.`);
+        if (author.admin) {
+            if (req.body.aprovado) req.body.aprovado = req.body.aprovado
+            if (req.body.completo) req.body.completo = req.body.completo
+        } else {
+            req.body.aprovado = Act.aprovado
+            req.body.completo = Act.completo
+        };
 
         // update the post with the new data
         await post.update(req.body);
