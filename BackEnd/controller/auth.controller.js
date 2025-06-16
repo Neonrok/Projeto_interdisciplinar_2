@@ -1,5 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 const db = require('../models/connect.js');
 const User = db.Perfil;
@@ -38,7 +39,7 @@ let verifyToken = async (req, res, next) => {
     const token = bearer[1];
 
     try {
-        let decoded = jwt.verify(token, config.SECRET);
+        let decoded = jwt.verify(token, process.env.SECRET);
         req.id = decoded.id; // save user ID and role into request object
         next();
 

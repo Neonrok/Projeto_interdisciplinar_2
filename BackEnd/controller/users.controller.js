@@ -51,11 +51,11 @@ let getUser = async (req, res, next) => {
 
 let geAllUsers = async (req, res, next) => {
     try {
-        console.log(req.id_Users);
         if (!req.admin)
             throw new ErrorHandler(403, { success: false, msg: "This request requires ADMIN role!" });
         // do not expose users' sensitive data
         let users = await User.findAll({attributes: {exclude: ['P_W']} })
+        console.log("teste")
         res.status(200).json({ users: users });
     } catch (err) {
         next(err);
