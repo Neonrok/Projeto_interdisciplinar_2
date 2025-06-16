@@ -51,7 +51,8 @@ let getUser = async (req, res, next) => {
 
 let geAllUsers = async (req, res, next) => {
     try {
-        if (!req.admin)
+        let util = await User.findByPk(req.id);
+        if (!util.admin)
             throw new ErrorHandler(403, { success: false, msg: "This request requires ADMIN role!" });
         // do not expose users' sensitive data
         let users = await User.findAll({attributes: {exclude: ['P_W']} })
