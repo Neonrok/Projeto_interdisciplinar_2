@@ -21,8 +21,9 @@ app.use((req, res, next) => {
 })
 
 //para fazer os verbos do post
-app.use('/Users', require('./routes/perfil.js'));
-app.use('/Atividades', require('./routes/Atividades.js'));
+app.use('/users', require('./routes/perfil.js'));
+app.use('/atividades', require('./routes/Atividades.js'));
+//app.use('/ren', require('./routes/Reuniao.js'))
 
 
 //Caso não seja encontrado manda o erro404    
