@@ -20,7 +20,7 @@ let login = async (req, res, next) => {
         if (!check) {throw new ErrorHandler(404, { success:false, accessToken:null, msg:"Invalid credentials!" })};
         
         const token = jwt.sign(
-            { id_Users: user.id_Users},
+            { id: user.id_Users},
             process.env.SECRET, { expiresIn: '24h'});
         
         res.status(200).json({ success: true, accessToken: token });
@@ -29,6 +29,7 @@ let login = async (req, res, next) => {
         next(err)
     }
 };
+
 let verifyToken = async (req, res, next) => {
     const header = req.headers['x-access-token'] || req.headers.authorization;
     if (typeof header == 'undefined')
@@ -37,13 +38,8 @@ let verifyToken = async (req, res, next) => {
     const token = bearer[1];
 
     try {
-
         let decoded = jwt.verify(token, config.SECRET);
-        req.id_Users = decoded.Users; // save user ID and role into request object
-        req.membro = decoded.membro;
-        req.secretariado = decoded.secretariado;
-        req.coordenador = decoded.coordenador;
-        req.admin = decoded.admin;
+        req.id = decoded.id; // save user ID and role into request object
         next();
 
     } catch(err) { next(err) }

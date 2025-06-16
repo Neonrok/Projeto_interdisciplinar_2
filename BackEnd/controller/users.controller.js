@@ -51,7 +51,7 @@ let getUser = async (req, res, next) => {
 
 let geAllUsers = async (req, res, next) => {
     try {
-        console.log(req);
+        console.log(req.id_Users);
         if (!req.admin)
             throw new ErrorHandler(403, { success: false, msg: "This request requires ADMIN role!" });
         // do not expose users' sensitive data
