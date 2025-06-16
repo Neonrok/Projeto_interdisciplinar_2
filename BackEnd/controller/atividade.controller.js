@@ -230,6 +230,16 @@ let ModifyActivity = async (req, res, next) => {
 
 let deleteAct = async (req, res, next) => {
     try {
+        const author = await USER.findByPk(req.id);
+        const Act = await Atividades.findOne({ where: { id_atividade: req.params.id } });
+
+        if (Act === null) {
+            throw new ErrorHandler(404, `Cannot find any Activity with ID ${req.params.id}.`);
+        }
+
+        if ( author.id_Users != Act.id_Users || !author.admin) {
+            throw new ErrorHandler(403, `You are not alowed to do this action.`);
+        };
         // delete a post in database given its id, using the Post model
         let result1 = await Atas_Ats.destroy({ where: { id_atividade: req.params.id } });
         let result2 = await Atividades.destroy({ where: { id_atividade: req.params.id } });

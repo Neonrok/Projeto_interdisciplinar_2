@@ -9,6 +9,10 @@ router.post('/', authController.verifyToken, atividadeController.Add_Act_post);
 
 router.get('/:id', atividadeController.Act_Infus_get );
 router.put('/:id', authController.verifyToken, atividadeController.ModifyActivity );
-router.delete('/:id', atividadeController.deleteAct );
+router.delete('/:id', authController.verifyToken, atividadeController.deleteAct );
+
+//router.get('/ins/:id', authController.verifyToken, atividadeController.)
+//router.post('/ins/:id', authController.verifyToken, atividadeController.)
+//router.delete('/ins/:id', authController.verifyToken, atividadeController.)
 
 module.exports = router;
