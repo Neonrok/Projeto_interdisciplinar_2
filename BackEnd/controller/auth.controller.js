@@ -39,11 +39,11 @@ let verifyToken = async (req, res, next) => {
     try {
 
         let decoded = jwt.verify(token, config.SECRET);
-        req.loggedUserId = decoded.Users; // save user ID and role into request object
-        req.loggedUserMem = decoded.membro;
-        req.loggedUserSec = decoded.secretariado;
-        req.loggedUsercCoor = decoded.coordenador;
-        req.loggedUsercAd = decoded.admin;
+        req.id_Users = decoded.Users; // save user ID and role into request object
+        req.membro = decoded.membro;
+        req.secretariado = decoded.secretariado;
+        req.coordenador = decoded.coordenador;
+        req.admin = decoded.admin;
         next();
 
     } catch(err) { next(err) }
