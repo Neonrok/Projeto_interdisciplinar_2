@@ -23,7 +23,7 @@ let login = async (req, res, next) => {
             { id: user.id_Users},
             process.env.SECRET, { expiresIn: '24h'});
         
-        res.status(200).json({ success: true, accessToken: token });
+        return res.status(200).json({ success: true, accessToken: token });
     
     } catch (err) {
         next(err)
