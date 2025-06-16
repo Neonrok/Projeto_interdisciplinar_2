@@ -1,6 +1,7 @@
 const db = require('../models/connect.js');
 const Atividades = db.Atividades;
 const Atas_Ats = db.Atas_Ats;
+const USER = db.Perfil;
 
 const { Op } = require('sequelize');
 
@@ -164,20 +165,16 @@ let Add_Act_post = async (req, res, next) => {
 let ModifyActivity = async (req, res, next) => {
     try {
         // sequelize update method allows PARTIAL updates, so we NEED to check for missing fields 
-        
-        if (req.body.id_Users === undefined) {
-            let error = new Error(`Your access token has expired! Please login again.`);
-            error.statusCode = 401;
-            return next(error);
-        }
 
-        const author = await db.Perfil.findByPk(req.body.id_Users);
+        const author = await USER.findByPk(req.id);
+
+        const user = await USER.findOne({ where: { id_Users: req.body.id_Users } });
 
         if (author === null) {
             throw new ErrorHandler(404, `Cannot find any USER with ID ${req.body.id_Users}.`);
         }
 
-        if (!author.membro && !author.admin) {//alterar depois isto está estranho
+        if ( author.id_Users === user.id_Users && !author.admin) {//alterar depois isto está estranho
             throw new ErrorHandler(403, `You are not alowed to do this action.`);
         };
 

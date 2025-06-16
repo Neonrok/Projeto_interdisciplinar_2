@@ -73,7 +73,7 @@ let modUser = async (req, res, next) => {
         if (!req.body || !req.body.Username || !req.body.Email){
             throw new ErrorHandler(400, { success: false, msg: "Email and username are mandatory" });
         }
-        let user = await User.findOne({ where: { Username: req.body.Username } }); //get user data from DB
+        let user = await User.findOne({ where: { id_Users: req.body.id_Users } }); //get user data from DB
         if (!user){ 
             throw new ErrorHandler(404, { success: false, msg: "esse Username não existe." });
         }
