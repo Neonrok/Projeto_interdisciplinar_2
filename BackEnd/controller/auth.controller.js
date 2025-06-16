@@ -8,15 +8,15 @@ const { ErrorHandler } = require("../utils/error.js");
 let login = async (req, res, next) => {
     try {
         if (!req.body || !req.body.Username || !req.body.P_W)
-            res.status(400).json({ success: false, msg: "Must provide username and password." })
+            throw new ErrorHandler(400, { success: false, msg: "Must provide username and password." })
 
         let user = await User.findOne({ where: { Username: req.body.Username } }); //get user data from DB
 
-        if (!user){res.status(404).json({ success: false, msg: "User not found." })};
+        if (!user){ throw new ErrorHandler(404, { success: false, msg: "User not found." })};
 
         const check = bcrypt.compareSync( req.body.P_W, user.P_W );
         
-        if (!check) {res.status(401).json({ success:false, accessToken:null, msg:"Invalid credentials!" })};
+        if (!check) {throw new ErrorHandler(404, { success:false, accessToken:null, msg:"Invalid credentials!" })};
         
         const token = jwt.sign(
             { id_Users: user.id_Users},
@@ -29,7 +29,23 @@ let login = async (req, res, next) => {
     }
 };
 let verifyToken = async (req, res, next) => {
-    try {} catch(err) { next(err) }
+    const header = req.headers['x-access-token'] || req.headers.authorization;
+    if (typeof header == 'undefined')
+        throw new ErrorHandler(401, { success: false, msg: "No token provided!" });
+    const bearer = header.split(' '); // Authorization header format: Bearer <token>
+    const token = bearer[1];
+
+    try {
+
+        let decoded = jwt.verify(token, config.SECRET);
+        req.loggedUserId = decoded.Users; // save user ID and role into request object
+        req.loggedUserMem = decoded.membro;
+        req.loggedUserSec = decoded.secretariado;
+        req.loggedUsercCoor = decoded.coordenador;
+        req.loggedUsercAd = decoded.admin;
+        next();
+
+    } catch(err) { next(err) }
 }
 
 module.exports = {

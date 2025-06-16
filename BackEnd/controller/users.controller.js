@@ -12,14 +12,16 @@ verbos
 
 let create = async (req, res, next) => {
     try{
-        if (!req.body || !req.body.Username || !req.body.P_W || !req.body.Email)
-            res.status(400).json({ success: false, msg: "Email, username and password are mandatory" });
-        
+        if (!req.body || !req.body.Username || !req.body.P_W || !req.body.Email){
+            throw new ErrorHandler(400, { success: false, msg: "Email, username and password are mandatory" });
+        }
         let user = await User.findOne({ where: { Username: req.body.Username } }); //get user data from DB
-        if (user) res.status(401).json({ success: false, msg: "esse Username já existe." });
+        if (user){ 
+            throw new ErrorHandler(401, { success: false, msg: "esse Username já existe." });
+        }
         
         // Save user to DB
-        await User.create({
+        const utilizador = await User.create({
             Username: req.body.Username, Email: req.body.Email,
             // hash its password (8 = #rounds – more rounds, more time)
             P_W: bcrypt.hashSync(req.body.P_W, 10)
