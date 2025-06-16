@@ -2,6 +2,8 @@ const bcrypt = require("bcryptjs");
 
 const db = require('../models/connect.js');
 const User = db.Perfil;
+const ConvAct = db.inscrits_Act;
+const Convren = db.convites_ren;
 
 const { ErrorHandler } = require("../utils/error.js");
 
@@ -105,6 +107,26 @@ let modUser = async (req, res, next) => {
     };
 }
 
+let deleteUser = async (req, res, next) => {
+    try {
+        console.log(req.body)
+        let user = await User.findOne({ where: { id_Users: req.params.id } }); //get user data from DB
+        if (!user){ 
+            throw new ErrorHandler(404, { success: false, msg: "esse Username não existe." });
+        }
+        let util = await User.findByPk(req.id);
+        if (util.admin || user.id_Users === util.id_Users) {
+            let result3 = await Convren.destroy({ where: { id_Users: req.params.id } });
+            let result2 = await ConvAct.destroy({ where: { id_Users: req.params.id } });
+            let result1 = await User.destroy({ where: { id_Users: req.params.id } });
+        } else {
+            throw new ErrorHandler(403, { success: false, msg: "Não está permitido a remover este utilizador" });
+        }
+        
+        res.status(204).json();
+    } catch(err) { next(err) };
+}
+
 module.exports = {
-    getUser, create, geAllUsers, modUser
+    getUser, create, geAllUsers, modUser, deleteUser
 }
