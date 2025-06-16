@@ -88,13 +88,7 @@ let Act_Infus_get = async (req, res, next) => {
 
 let Add_Act_post = async (req, res, next) => {
     try {
-        if (req.body.id_Users === undefined) {
-            let error = new Error(`Your access token has expired! Please login again.`);
-            error.statusCode = 401;
-            return next(error);
-        }
-
-        const author = await db.Perfil.findByPk(req.body.id_Users);
+        const author = await db.Perfil.findByPk(req.id);
 
         if (author === null) {
             throw new ErrorHandler(404, `Cannot find any USER with ID ${req.body.id_Users}.`);
@@ -102,7 +96,7 @@ let Add_Act_post = async (req, res, next) => {
 
         if (!author.membro && !author.admin) {
             throw new ErrorHandler(403, `You are not alowed to do this action.`);
-        };
+        } else { req.body.id_Users = req.id};
 
         if (req.body.d_inicio === undefined) {
             let error = new Error(`è necessario uma data de inicio`);

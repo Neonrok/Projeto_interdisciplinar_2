@@ -9,9 +9,9 @@ router.post('/', usersController.create); //PUBLIC
 router.get('/', authController.verifyToken, usersController.geAllUsers); //para ADMS
 
 // routes for /users requests
-router.get('/:id',authController.verifyToken, usersController.getUser ); // get all infus about users
-router.put('/:id',authController.verifyToken, usersController.modUser);
-router.delete('/:id',authController.verifyToken, usersController.deleteUser);
+router.get('/:id', authController.verifyToken, usersController.getUser ); // get all infus about users
+router.put('/:id', authController.verifyToken, usersController.modUser);
+router.delete('/:id', authController.verifyToken, usersController.deleteUser);
 
 router.post('/login', authController.login); //PUBLIC
 
