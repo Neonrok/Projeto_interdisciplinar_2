@@ -10,11 +10,6 @@ module.exports = (sequelize, DataTypes) => {
         id_Users: {
             type:DataTypes.INTEGER,
             allowNull: false
-        },
-        inscrito: {
-            type:DataTypes.BOOLEAN,
-            allowNull: false,
-            defaultValue: false
         }
     }, {
         timestamps: false,

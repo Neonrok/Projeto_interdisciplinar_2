@@ -11,11 +11,6 @@ module.exports = (sequelize, DataTypes) => {
             type:DataTypes.INTEGER,
             allowNull: false
         },
-        inscrito: {
-            type:DataTypes.BOOLEAN,
-            allowNull: false,
-            defaultValue: false
-        },
         presente: {
             type:DataTypes.BOOLEAN,
             allowNull: false,
