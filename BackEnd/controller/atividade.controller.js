@@ -131,7 +131,13 @@ let Add_Act_post = async (req, res, next) => {
             error.statusCode = 400;
             return next(error);
         } else if (typeof req.body.body != 'string') {
-            let error = new Error(`A descrição tem que ser uma string tem que ser uma string.`);
+            let error = new Error(`A descrição tem que ser uma string.`);
+            error.statusCode = 400;
+            return next(error);
+        }
+
+        if (typeof req.body.img != 'string' || typeof req.body.img === undefined) {
+            let error = new Error(`A o caminho da imagem tem que ser uma string.`);
             error.statusCode = 400;
             return next(error);
         }
