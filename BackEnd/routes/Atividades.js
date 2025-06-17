@@ -11,8 +11,7 @@ router.get('/:id', atividadeController.Act_Infus_get );
 router.put('/:id', authController.verifyToken, atividadeController.ModifyActivity );
 router.delete('/:id', authController.verifyToken, atividadeController.deleteAct );
 
-router.get('/ins/:id', authController.verifyToken, atividadeController.getInsc)
-router.post('/ins', authController.verifyToken, atividadeController.AddInsc)
-router.delete('/ins', authController.verifyToken, atividadeController.RevInsc)
+router.get('/ins/:id', authController.verifyToken, atividadeController.getInsc);
+router.post('/ins', authController.verifyToken, atividadeController.AddInsc);
 
 module.exports = router;
