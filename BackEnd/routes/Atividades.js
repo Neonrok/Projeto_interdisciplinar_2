@@ -1,8 +1,8 @@
 const express = require('express');
-const router = express.Router();
+const atividadeController = require('../controller/atividade.controller.js');
 const authController = require("../controller/auth.controller.js");
 
-const atividadeController = require('../controller/atividade.controller.js');
+const router = express.Router();
 
 router.get('/', atividadeController.All_Acts_get );
 router.post('/', authController.verifyToken, atividadeController.Add_Act_post);
