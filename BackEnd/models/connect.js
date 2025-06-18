@@ -10,6 +10,9 @@ const sequelize = new Sequelize(
             min: 0, // minimum number of connections in pool
             acquire: 30000, // maximum time (in ms) that a connection can be idle before being released
             idle: 10000 // maximum time (in ms) that a connection can be idle before being released
+        },
+        define: {
+            noPrimaryKey: true,
         }
     }
 );

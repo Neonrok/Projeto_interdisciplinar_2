@@ -7,6 +7,7 @@ const router = express.Router();
 router.get('/', authController.verifyToken, renController.allrens)
 router.post('/', authController.verifyToken, renController.addRen)
 
-//router.get('/:id', renController)
+router.get('/:id', authController.verifyToken, renController.getRen)
+router.put('/:id', authController.verifyToken, renController.modRen)
 
 module.exports = router;

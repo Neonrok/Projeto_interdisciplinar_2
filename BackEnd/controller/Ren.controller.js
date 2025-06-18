@@ -4,6 +4,7 @@ const db = require('../models/connect.js');
 const User = db.Perfil;
 const Ren = db.Reuniao;
 const Atas_ren = db.Atas_ren;
+const convRen = db.convites_ren;
 
 let allrens = async (req, res, next) => {
     try {
@@ -24,11 +25,23 @@ let allrens = async (req, res, next) => {
         if (isNaN(limit) || limit < 1)
             throw new ErrorHandler(400, `Invalid value for limit: ${limit}. It should be a positive integer.`);
 
-        const Acts = await Atividades.findAndCountAll({
+        const Rens = await Ren.findAndCountAll({
             where,
             limit: +limit,
             offset: (+page - 1) * +limit,
             raw: true
+        })
+
+        res.status(200).json({
+            totalPages: Math.ceil(Rens.count / limit),
+            currentPage: page ? page : 0,
+            total: Rens.count,
+            data: Rens.rows,
+            links: [
+                { "rel": "add-post", "href": `/Atividades`, "method": "POST" },
+                ...(page > 1 ? [{ "rel": "previous-page", "href": `/Atividades?limit=${limit}&page=${page - 1}`, "method": "GET" }] : []),
+                ...(Rens.count > page * limit ? [{ "rel": "next-page", "href": `/Atividades?limit=${limit}&page=${+page + 1}`, "method": "GET" }] : [])
+            ]
         })
 
     } catch(err) {
@@ -94,15 +107,18 @@ let addRen = async (req, res, next) => {
 let getRen = async (req, res, next) => {
 
     try {
-        const Ren = await Ren.findByPk(req.params.id);
-        if (!Ren)
+        const Renn = await Ren.findByPk(req.params.id);
+        if (!Renn)
             throw new ErrorHandler(404, `Não existe nelhuma reunião com esse ID ID ${req.params.id}.`);
 
-        if (!true)
+        let util = await User.findByPk(req.id);
+        let findConv = await convRen.findOne({ where: { id_reuniao: req.params.id, id_Users:req.id } });
+
+        if (!util.admin && req.id===Renn.id_Users && findConv === null)
             throw new ErrorHandler(403, `Não Foste convidado para ésta reunião ${req.params.id}.`);
 
         return res.status(200).json({
-            data: Ren
+            data: Renn
         });
     }
     catch (err) {
@@ -110,6 +126,48 @@ let getRen = async (req, res, next) => {
     }
 }
 
+let modRen = async (req, res, next) => {
+    try{
+        const Renn = await Ren.findByPk(req.params.id);
+        if (!Renn)
+            throw new ErrorHandler(404, `Não existe nelhuma reunião com esse ID ID ${req.params.id}.`);
+
+        let util = await User.findByPk(req.id);
+
+        if (!util.admin && req.id===Renn.id_Users)
+            throw new ErrorHandler(403, `Não pode editar esta reunião ${req.params.id}.`);
+
+        let missingFields = [];
+        if (req.body.titulo === undefined) missingFields.push('titulo');
+        if (req.body.body === undefined) missingFields.push('body');
+
+        if (req.body.dat === undefined){
+            missingFields.push('d_inicio');
+        } else {
+            let dataI = new Date(req.body.dat);
+            
+            if ((dataI == "Invalid Date")) {
+                let error = new Error(`isso não é uma data.`);
+                error.statusCode = 400;
+                return next(error);
+        }
+        };
+
+        if (missingFields.length > 0) 
+           throw new ErrorHandler(400, `Missing required fields: ${missingFields.join(', ')}`);
+        
+        const Ron = await Ren.findByPk(req.params.id);
+        if (!Ron) 
+            throw new ErrorHandler(404, `Cannot find any reuniao with ID ${req.params.id}.`);
+
+        await Ron.update(req.body);
+
+        res.status(204).json();
+
+
+    } catch (err) { next(err) }
+}
+
 module.exports = {
-    allrens, addRen
+    allrens, addRen, getRen, modRen
 }
