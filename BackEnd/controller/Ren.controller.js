@@ -7,6 +7,10 @@ const Atas_ren = db.Atas_ren;
 
 let allrens = async (req, res, next) => {
     try {
+        let util = await User.findByPk(req.id);
+        if (!util.admin && !util.secretariado)
+            throw new ErrorHandler(403, { success: false, msg: "This request requires ADMIN and secretariado role!" });
+
         const { titulo, dat, page = 1, limit = 10 } = req.query;
         const where = {};
 
@@ -87,6 +91,24 @@ let addRen = async (req, res, next) => {
     } catch(err) { next(err) }
 }
 
+let getRen = async (req, res, next) => {
+
+    try {
+        const Ren = await Ren.findByPk(req.params.id);
+        if (!Ren)
+            throw new ErrorHandler(404, `Não existe nelhuma reunião com esse ID ID ${req.params.id}.`);
+
+        if (!true)
+            throw new ErrorHandler(403, `Não Foste convidado para ésta reunião ${req.params.id}.`);
+
+        return res.status(200).json({
+            data: Ren
+        });
+    }
+    catch (err) {
+        next(err);
+    }
+}
 
 module.exports = {
     allrens, addRen

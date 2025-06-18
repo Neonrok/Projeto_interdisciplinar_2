@@ -4,7 +4,7 @@ const authController = require("../controller/auth.controller.js");
 
 const router = express.Router();
 
-router.get('/', renController.allrens)
+router.get('/', authController.verifyToken, renController.allrens)
 router.post('/', authController.verifyToken, renController.addRen)
 
 //router.get('/:id', renController)
