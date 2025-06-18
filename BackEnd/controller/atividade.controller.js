@@ -254,6 +254,9 @@ let deleteAct = async (req, res, next) => {
         
         if (result2 == 0) 
            throw new ErrorHandler(404,`Cannot find any Activity relatory with ID ${req.params.id}.`);
+
+        if (result3 == 0) 
+           throw new ErrorHandler(404,`Cannot find any Activity Inscrits with ID ${req.params.id}.`);
         
         // send 204 No Content respons
         res.status(204).json();

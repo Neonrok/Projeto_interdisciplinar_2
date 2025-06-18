@@ -1,5 +1,7 @@
 const bcrypt = require("bcryptjs");
 
+const { ErrorHandler } = require("../utils/error.js");
+
 const db = require('../models/connect.js');
 const User = db.Perfil;
 const Ren = db.Reuniao;
@@ -168,6 +170,36 @@ let modRen = async (req, res, next) => {
     } catch (err) { next(err) }
 }
 
+let delRen =async (req, res, next) => {
+    try{
+        const author = await User.findByPk(req.id);
+        const Renn = await Ren.findByPk(req.params.id);
+
+        if (Renn === null) {
+            throw new ErrorHandler(404, `Cannot find any Activity with ID ${req.params.id}.`);
+        }
+
+        if ( author.id_Users != Renn.id_Users && !author.admin) {
+            throw new ErrorHandler(403, `You are not alowed to do this action.`);
+        };
+
+        
+        let result1 = await Atas_ren.destroy({ where: { id_reuniao: req.params.id } });
+        let result3 = await convRen.destroy({ where: { id_reuniao: req.params.id } });
+        let result2 = await Ren.destroy({ where: { id_reuniao: req.params.id } });
+
+        if (result1 == 0) 
+           throw new ErrorHandler(404,`Cannot find any Ren with ID ${req.params.id}.`);
+        
+        if (result2 == 0) 
+           throw new ErrorHandler(404,`Cannot find any Ren relatory with ID ${req.params.id}.`);
+        
+        // send 204 No Content respons
+        res.status(204).json();
+
+    } catch (err) { next(err) }
+}
+
 module.exports = {
-    allrens, addRen, getRen, modRen
+    allrens, addRen, getRen, modRen, delRen
 }

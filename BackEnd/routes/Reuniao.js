@@ -9,5 +9,6 @@ router.post('/', authController.verifyToken, renController.addRen)
 
 router.get('/:id', authController.verifyToken, renController.getRen)
 router.put('/:id', authController.verifyToken, renController.modRen)
+router.delete('/:id', authController.verifyToken, renController.delRen)
 
 module.exports = router;
