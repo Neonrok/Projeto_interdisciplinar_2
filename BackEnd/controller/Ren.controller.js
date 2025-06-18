@@ -31,11 +31,22 @@ let allrens = async (req, res, next) => {
     }
 }
 
-let addRen = async (req, res,next) => {
-    try {} catch { next(err) }
+let addRen = async (req, res, next) => {
+    try {
+        const author = await db.Perfil.findByPk(req.id);
+        if (!author.secretariado || !author.admin) {
+            throw new ErrorHandler(403, `You are not alowed to do this action.`);
+        } else { req.body.id_Users = req.id};
+
+        if (req.body.dat === undefined) {
+            let error = new Error(`è necessario uma data de inicio`);
+            error.statusCode = 400;
+            return next(error);
+        };
+    } catch { next(err) }
 }
 
 
 module.exports = {
-    allrens
+    allrens, addRen
 }

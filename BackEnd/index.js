@@ -1,5 +1,6 @@
 //API Express requesitos
 const express = require('express');
+const cors = require("cors");
 require('dotenv').config();
 
 //comfiguração basica da express
@@ -8,6 +9,7 @@ const host = process.env.HOST;
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
+app.use(cors());
 
 
 //Este é o inicio de toda o ordem da API aqui que vai começar a api rest

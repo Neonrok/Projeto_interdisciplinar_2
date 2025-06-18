@@ -5,8 +5,8 @@ const renController = require('../controller/Ren.controller.js');
 const router = express.Router();
 
 router.get('/', renController.allrens)
-router.post('/', renController)
+router.post('/', renController.addRen)
 
-router.get('/:id', renController)
+//router.get('/:id', renController)
 
 module.exports = router;
