@@ -149,15 +149,12 @@ let Add_Act_post = async (req, res, next) => {
         const post_rel = await Atas_Ats.create(ab)
 
         res.status(201).json({
-            msg: "Post successfully created.",
+            msg: "Atividade colocada com sucesso.",
             //add HATEOAS links to the created post
             links: [
-                { rel: "self", href: `/posts/${post.id}`, method: "GET" },
-                { rel: "delete", href: `/posts/${post.id}`, method: "DELETE" },
-                { rel: "modify", href: `/posts/${post.id}`, method: "PUT" },
-                // NEW: link to add tags to the post
-                { rel: "add-tags", href: `/posts/${post.id}/tags`, method: "POST" },
-
+                { rel: "self", href: `/atividades/${post.id}`, method: "GET" },
+                { rel: "delete", href: `/atividades/${post.id}`, method: "DELETE" },
+                { rel: "modify", href: `/atividades/${post.id}`, method: "PUT" }
             ]
         });
     } catch (err) {
