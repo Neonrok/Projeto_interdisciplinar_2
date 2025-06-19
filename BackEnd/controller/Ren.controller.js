@@ -200,6 +200,84 @@ let delRen =async (req, res, next) => {
     } catch (err) { next(err) }
 }
 
+let getConv = async (req, res, next) => {
+    try {
+        const author = await User.findByPk(req.id);
+        const Renn = await Ren.findOne({ where: { id_atividade: req.params.id } });
+
+        if (Renn === null) {
+            throw new ErrorHandler(404, `Cannot find any Ren with ID ${req.params.id}.`);
+        }
+
+        if ( author.id_Users != Renn.id_Users && !author.admin) {
+            throw new ErrorHandler(403, `You are not alowed to do this action.`);
+        };
+
+        const {  page = 1, limit = 12 } = req.query;
+        const where = {id_atividade: req.params.id};
+
+        if (isNaN(page) || page < 1)
+            throw new ErrorHandler(400, `Invalid value for page: ${page}. It should be a positive integer.`);
+
+        if (isNaN(limit) || limit < 1)
+            throw new ErrorHandler(400, `Invalid value for limit: ${limit}. It should be a positive integer.`);
+
+        const Acts = await convRen.findAndCountAll({
+            where,
+            limit: +limit,
+            offset: (+page - 1) * +limit,
+            raw: true
+        })
+
+        res.status(200).json({
+            totalPages: Math.ceil(Acts.count / limit),
+            currentPage: page ? page : 0,
+            total: Acts.count,
+            data: Acts.rows,
+            links: [
+                { "rel": "add-post", "href": `/Atividades`, "method": "POST" },
+                ...(page > 1 ? [{ "rel": "previous-page", "href": `/Atividades?limit=${limit}&page=${page - 1}`, "method": "GET" }] : []),
+                ...(Acts.count > page * limit ? [{ "rel": "next-page", "href": `/Atividades?limit=${limit}&page=${+page + 1}`, "method": "GET" }] : [])
+            ]
+        })
+
+    } catch (err) {next(err);}
+}
+
+let AddConv = async (req, res, next) => {
+    try{
+        const author = await User.findByPk(req.id);
+        const Renn = await Ren.findOne({ where: { id_atividade: req.body.id_atividade } });
+
+        if (Renn === null) {
+            throw new ErrorHandler(404, `Cannot find any Ren with ID ${req.body.id_atividade}.`);
+        }
+
+        if ( author.id_Users != Renn.id_Users && !author.admin) {
+            throw new ErrorHandler(403, `You are not alowed to do this action.`);
+        };
+
+        let convi = await User.findByPk(req.body.id_Users);
+        if (convi === null) {
+            throw new ErrorHandler(404, `Cannot find any user with ID ${req.params.id}.`);
+        }
+        const found = await convRen.findOne({where: {id_atividade: req.body.id_atividade, id_Users:req.body.id_Users}});
+        const vr = found.presente;
+        if (found != null) {
+            const post = await convRen.destroy({ where: {id_atividade: req.body.id_atividade, id_Users:req.body.id_Users} });
+
+              throw new ErrorHandler(204, `Removido`);
+        } else if(vr.presente === req.body.presente){
+            convRen.update(req.body)
+        }
+
+        const post = await convRen.create(req.body);
+
+        res.status(201).json(post);
+
+    } catch (err) {next(err);}
+}
+
 module.exports = {
-    allrens, addRen, getRen, modRen, delRen
+    allrens, addRen, getRen, modRen, delRen, getConv
 }
