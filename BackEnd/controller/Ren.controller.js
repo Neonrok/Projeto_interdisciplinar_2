@@ -264,12 +264,14 @@ let AddConv = async (req, res, next) => {
         const found = await convRen.findOne({where: {id_atividade: req.body.id_atividade, id_Users:req.body.id_Users}});
         const vr = found.presente;
         if (found != null) {
+            if(vr.presente != req.body.presente){
+                let poster = await convRen.update(req.body)
+                throw new ErrorHandler(204, `Editado`);
+            }
             const post = await convRen.destroy({ where: {id_atividade: req.body.id_atividade, id_Users:req.body.id_Users} });
 
-              throw new ErrorHandler(204, `Removido`);
-        } else if(vr.presente === req.body.presente){
-            convRen.update(req.body)
-        }
+            throw new ErrorHandler(204, `Removido`);
+        } 
 
         const post = await convRen.create(req.body);
 
@@ -279,5 +281,5 @@ let AddConv = async (req, res, next) => {
 }
 
 module.exports = {
-    allrens, addRen, getRen, modRen, delRen, getConv
+    allrens, addRen, getRen, modRen, delRen, getConv, AddConv
 }

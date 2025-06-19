@@ -12,6 +12,6 @@ router.put('/:id', authController.verifyToken, renController.modRen)
 router.delete('/:id', authController.verifyToken, renController.delRen)
 
 router.get('/conv/:id', authController.verifyToken, renController.getConv);
-//router.post('/ins', authController.verifyToken, renController);
+router.post('/ins', authController.verifyToken, renController.AddConv);
 
 module.exports = router;
