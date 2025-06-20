@@ -1,33 +1,46 @@
 // Função para carregar dados do usuário
-function carregarDadosUsuario() {
+async function carregarDadosUsuario() {
     const jwt = localStorage.getItem('token');
     if (!jwt) {
         window.location.href = 'login.html';
         return;
-    } else {
-      const id = localStorage.getItem('id');
-    }
+    } 
+    const id = localStorage.getItem('id');
 
-    document.getElementById('user-id').textContent = dados.id;
-    document.getElementById('email').textContent = dados.email || '--';
-    document.getElementById('username').textContent = dados.email ? dados.email.split('@')[0] : 'user123';
+    console.log(jwt)
+    console.log(id)
+    
+    const resposta = await fetch(`http://localhost:3000/users/${id}`,{
+        method: 'GET',
+        headers: { 'Authorization': `Bearer ${jwt}` }
+    })
+
+    let dados = await resposta.json();
+    dados= dados.data
+    console.log(dados)
+
+    document.getElementById('email').textContent = dados.Email || '--';
+    document.getElementById('username').textContent = dados.Username || '--';
+    document.getElementById('bio').textContent = dados.descricao || 'Esta descrição não existe';
 
       // Atualiza o cargo e área admin
     const cargoEl = document.getElementById('cargo');
-    const adminArea = document.querySelector('.admin-area');
+    let allcargos = ""
 
-    if (dados.tipo === 'admin') {
-        cargoEl.textContent = 'Administrador';
-        adminArea.style.display = 'block';
-        adminArea.setAttribute('aria-hidden', 'false');
-    } else if (dados.tipo === 'user') {
-        cargoEl.textContent = 'Utilizador Registado';
-        adminArea.style.display = 'none';
-        adminArea.setAttribute('aria-hidden', 'true');
-    } else {
-        cargoEl.textContent = 'Convidado';
-        adminArea.style.display = 'none';
-        adminArea.setAttribute('aria-hidden', 'true');
+    if (dados.membro) {
+        allcargos += 'Membro';
+    } 
+    if (dados.secretariado) {
+        allcargos += 'Secretariado';
+    } 
+    if (dados.coordenador) {
+        allcargos += 'Coordenador';
+    } 
+    if (dados.admin) {
+        allcargos += 'Administrador';
+    } 
+    if(dados.membro || dados.secretariado || dados.coordenador || dados.admin){
+      cargoEl.textContent = allcargos
     }
 }
 
@@ -70,7 +83,7 @@ document.getElementById('input-foto-perfil').addEventListener('change', (event) 
 document.getElementById('logoutBtn').addEventListener('click', () => {
     sessionStorage.clear();
     alert('Sessão terminada com sucesso!');
-    window.location.href = 'login.html';
+    window.location.href = '../index.html';
 });
 
     // Inicializar página
@@ -83,16 +96,3 @@ window.addEventListener('DOMContentLoaded', () => {
  document.getElementById("viewUsersBtn").addEventListener("click", function() {
     window.location.href = "admin.html";
   });
-
-  
-// Evento para entrar na área administrativa (só admins)
-document.getElementById('adminBtn').addEventListener('click', () => {
-  window.location.href = 'admin.html'; // Ajuste para o caminho correto da página admin
-});
-
-
-// Inicializar página
-window.addEventListener('DOMContentLoaded', () => {
-  carregarDadosUsuario();
-  //carregarFotoPerfil();
-});
