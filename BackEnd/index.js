@@ -26,7 +26,7 @@ app.use((req, res, next) => {
 app.use('/users', require('./routes/perfil.js'));
 app.use('/atividades', require('./routes/Atividades.js'));
 app.use('/ren', require('./routes/Reuniao.js'))
-
+app.use('/rel', require('./routes/Rels.js'))
 
 //Caso não seja encontrado manda o erro404    
 app.use((req, res, next) => {
