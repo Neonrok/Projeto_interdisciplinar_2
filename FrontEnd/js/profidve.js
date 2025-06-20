@@ -6,9 +6,6 @@ async function carregarDadosUsuario() {
         return;
     } 
     const id = localStorage.getItem('id');
-
-    console.log(jwt)
-    console.log(id)
     
     const resposta = await fetch(`http://localhost:3000/users/${id}`,{
         method: 'GET',
@@ -82,6 +79,7 @@ document.getElementById('input-foto-perfil').addEventListener('change', (event) 
     // Evento para logout
 document.getElementById('logoutBtn').addEventListener('click', () => {
     sessionStorage.clear();
+    localStorage.clear();
     alert('Sessão terminada com sucesso!');
     window.location.href = '../index.html';
 });
