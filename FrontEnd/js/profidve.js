@@ -1,16 +1,18 @@
 // Função para carregar dados do usuário
 function carregarDadosUsuario() {
-    const jwt = localStorage.getItem('token');;
-    if (!jwt || !dados.id) {
+    const jwt = localStorage.getItem('token');
+    if (!jwt) {
         window.location.href = 'login.html';
         return;
+    } else {
+      const id = localStorage.getItem('id');
     }
 
     document.getElementById('user-id').textContent = dados.id;
     document.getElementById('email').textContent = dados.email || '--';
     document.getElementById('username').textContent = dados.email ? dados.email.split('@')[0] : 'user123';
 
-    // Atualiza o cargo e área admin
+      // Atualiza o cargo e área admin
     const cargoEl = document.getElementById('cargo');
     const adminArea = document.querySelector('.admin-area');
 

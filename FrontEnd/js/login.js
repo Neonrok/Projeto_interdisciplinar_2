@@ -11,8 +11,17 @@ async function LogIn() {
   const data = await response.json();
   if (response.ok) {
       localStorage.setItem('token', data.accessToken);
-      alert('✅ Login bem-sucedido!');
-      window.location.href = '../html/perfil.html';
+
+    const verify = await fetch('http://127.0.0.1:3000/users/login/verify', {
+        headers: { 'Authorization': `Bearer ${data.accessToken}` }
+    });
+
+    let form = await verify.json();
+    localStorage.setItem('id', form.data);
+
+    alert('✅ Login bem-sucedido!');
+
+    window.location.href = '../html/perfil.html';
   } else { alert('❌ Erro: ' + data.message); };
 };
 
@@ -29,11 +38,16 @@ async function SigIn() {
 
   const data = await response.json();
   if (response.ok) {
-      localStorage.setItem('token', data.accessToken);
-      alert('✅ Utilizador registado com sucesso!');
-      window.location.href = '../html/perfil.html';
+    localStorage.setItem('token', data.accessToken);
+    alert('✅ Utilizador registado com sucesso!');
+    const verify = await fetch('http://127.0.0.1:3000/users/login/verify', {
+        headers: { 'Authorization': `Bearer ${data.accessToken}` }
+    });
+
+    let form = await verify.json();
+    localStorage.setItem('id', form.data);
+    window.location.href = '../html/perfil.html';
   } else {
       alert('❌ Erro ao registar: ' + data.message);
   };
-  console.log(data);
 };

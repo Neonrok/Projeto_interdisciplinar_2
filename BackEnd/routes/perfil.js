@@ -14,6 +14,6 @@ router.put('/:id', authController.verifyToken, usersController.modUser);
 router.delete('/:id', authController.verifyToken, usersController.deleteUser);
 
 router.post('/login', authController.login); //PUBLIC
-router.post('/verify', authController.verifyToken);
+router.get('/login/verify', authController.verifyToken, usersController.getId );
 
 module.exports = router;

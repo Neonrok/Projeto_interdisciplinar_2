@@ -42,7 +42,7 @@ let getUser = async (req, res, next) => {
         if (!id_Users) 
             throw new ErrorHandler(404,`Cannot find any USER with ID ${req.params.id}.`);
 
-        if (util.admin || id_Users.id_Users != util.id_Users)
+        if (util.admin && id_Users.id_Users != util.id_Users)
             throw new ErrorHandler(403,`This is not you.`);
 
         return res.status(200).json({
@@ -127,6 +127,18 @@ let deleteUser = async (req, res, next) => {
     } catch(err) { next(err) };
 }
 
+let getId = async (req, res, next) => {
+    console.log(req.id)
+    try{
+        let util = await User.findByPk(req.id);
+        return res.status(200).json({
+            data: util.id_Users
+        });
+    } catch(err) {
+        next(err)
+    };
+}
+
 module.exports = {
-    getUser, create, geAllUsers, modUser, deleteUser
+    getUser, create, geAllUsers, modUser, deleteUser, getId
 }
