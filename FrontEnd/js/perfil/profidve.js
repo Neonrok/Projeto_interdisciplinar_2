@@ -16,8 +16,8 @@ async function carregarDadosUsuario() {
     dados= dados.data
     console.log(dados)
 
-    document.getElementById('email').textContent = dados.Email || '--';
     document.getElementById('username').textContent = dados.Username || '--';
+    document.getElementById('email').textContent = dados.Email || '--';
     document.getElementById('bio').textContent = dados.descricao || 'Esta descrição não existe';
 
       // Atualiza o cargo e área admin
@@ -85,7 +85,7 @@ document.getElementById('logoutBtn').addEventListener('click', () => {
     sessionStorage.clear();
     localStorage.clear();
     alert('Sessão terminada com sucesso!');
-    window.location.href = '../index.html';
+    window.location.href = '../../index.html';
 });
 
     // Inicializar página

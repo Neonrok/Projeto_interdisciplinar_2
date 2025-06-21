@@ -22,25 +22,33 @@ let charg = async function carregarDadosUsuario() {
 let Editar = async function Edit() {
     const jwt = localStorage.getItem('token');
     const id = localStorage.getItem('id');
-    console.log(jwt, id)
 
-    let username = document.getElementById('Email').value;
-    let Email = document.getElementById('Email').value;
-    let bio = document.getElementById('bio').value;
-    let password = document.getElementById('password').value
+    let username = document.getElementById('Name').value || null;;
+    let Email = document.getElementById('Email').value || null;;
+    let bio = document.getElementById('bio').value || null; // Assign null if empty
+    let password = document.getElementById('password').value || null;
 
     const resposta = await fetch(`http://127.0.0.1:3000/users/${id}`,{
         method: 'PUT',
-        headers: { 'Authorization': `Bearer ${jwt}` },
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${jwt}` },
         body: JSON.stringify({ Username:username, Email:Email, descricao:bio, P_W:password })
     })
-
-    const data = await resposta.json();
 
     if (resposta.ok) {
         alert('✅ Login bem-sucedido!');
         window.location.href = '../../html/perfil/perfil.html';
-    } else { alert('❌ Erro: ' + data.message); };
+    } else { alert('❌ :()'); };
+}
+
+let deletar = async function remover() {
+    const jwt = localStorage.getItem('token');
+    const id = localStorage.getItem('id');
+    if (confirm("Tens a serteza")) {
+        const resposta = await fetch(`http://127.0.0.1:3000/users/${id}`,{
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${jwt}` }
+        })
+    }
 }
 
 window.addEventListener('DOMContentLoaded', () => {

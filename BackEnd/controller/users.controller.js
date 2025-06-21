@@ -77,10 +77,10 @@ let modUser = async (req, res, next) => {
         if (!user){ 
             throw new ErrorHandler(404, { success: false, msg: "esse Username não existe." });
         }
-        if (!req.body.Username) {req.body.Username = user.Username};
-        if (!req.body.Email) {req.body.Email = user.Email};
-        if (!req.body.descricao) {req.body.descricao = user.descricao};
-        if (!req.body.P_W) {req.body.P_W = user.P_W} 
+        if (!req.body.Username || req.body.Username === undefined ) {req.body.Username = user.Username};
+        if (!req.body.Email || req.body.Email === undefined ) {req.body.Email = user.Email};
+        if (!req.body.descricao || req.body.descricao === undefined ) {req.body.descricao = user.descricao};
+        if (!req.body.P_W || req.body.P_W === undefined ) {req.body.P_W = user.P_W} 
         else {req.body.P_W = bcrypt.hashSync(req.body.P_W, 10)};
         let util = await User.findByPk(req.id);
         if (util.admin){

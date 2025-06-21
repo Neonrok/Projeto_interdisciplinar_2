@@ -51,3 +51,15 @@ async function SigIn() {
       alert('❌ Erro ao registar: ' + data.message);
   };
 };
+
+let lTS = function Log2Sig(){
+    document.getElementById('signup-container').display = "block";
+    document.getElementById('login-container').display = "none";
+    console.log(1)
+};
+
+let STL = function Sig2Log(){
+    document.getElementById('signup-container').display = "none";
+    document.getElementById('login-container').display = "block";
+    console.log(2)
+};
