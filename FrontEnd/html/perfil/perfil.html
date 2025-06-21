@@ -4,18 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Perfil do Utilizador</title>
-  <link rel="stylesheet" href="../css/proftyle.css" />
+  <link rel="stylesheet" href="../../css/proftyle.css" />
 </head>
 <body>
   <header>
     <div class="container">
       <h1>Eco-Escolas 🌿</h1>
       <nav>
-        <a href="../index.html">Início</a>
+        <a href="../../index.html">Início</a>
         <a href="../html/sobre.html">Sobre</a>
         <a href="../html/atividade.html">Atividades</a>
         <a href="../html/contactos.html">Contactos</a>
-        <a href="../html/perfil.html">Perfil</a>
+        <a href="../html/perfil/perfil.html">Perfil</a>
       </nav>
     </div>
   </header>
@@ -29,6 +29,12 @@
       <h2 id="username">User</h2>
       <p id="cargo">---</p>
     </div>
+    <br><br><br>
+    <button id="Edit" type="button" class="btn-view-users"  onclick="Editar()"
+      style="padding: 7px 12px 7px 12px; border-radius: 12px; border: none;
+      background-color: #2e7d32; color: white; font-weight: 700; cursor: pointer;">
+      EDIT
+    </button>
   </div>
   <div class="perfil-info">
     <p><strong>Email:</strong> <span id="email">--</span></p>
@@ -42,21 +48,14 @@
     Terminar Sessão
   </button>
 
-  <button id="viewUsersBtn" type="button" class="btn-view-users" 
-    style="padding: 21px; border-radius: 16px; border: none; background-color: #2e7d32; color: white; font-weight: 600; cursor: pointer;">
-    Ver Utilizadores
-  </button>
 </div>
 
 </section>
-  
   </main>
-
   <footer>
     <p>© 2025 Eco-Escolas. Todos os direitos reservados.</p>
   </footer>
-
-  <script src="../js/profidve.js"></script>
+  <script src="../../js/perfil/profidve.js"></script>
 </body>
 </html>
 

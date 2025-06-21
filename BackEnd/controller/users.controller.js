@@ -70,16 +70,19 @@ let geAllUsers = async (req, res, next) => {
 
 let modUser = async (req, res, next) => {
     try {
-        if (!req.body || !req.body.Username || !req.body.Email){
-            throw new ErrorHandler(400, { success: false, msg: "Email and username are mandatory" });
+        if (!req.body){
+            throw new ErrorHandler(400, { success: false, msg: "You need to change something" });
         }
-        let user = await User.findOne({ where: { id_Users: req.body.id_Users } }); //get user data from DB
+        let user = await User.findByPk(req.params.id ); //get user data from DB
         if (!user){ 
             throw new ErrorHandler(404, { success: false, msg: "esse Username não existe." });
         }
-        console.log(req.id)
+        if (!req.body.Username) {req.body.Username = user.Username};
+        if (!req.body.Email) {req.body.Email = user.Email};
+        if (!req.body.descricao) {req.body.descricao = user.descricao};
+        if (!req.body.P_W) {req.body.P_W = user.P_W} 
+        else {req.body.P_W = bcrypt.hashSync(req.body.P_W, 10)};
         let util = await User.findByPk(req.id);
-        console.log(util)
         if (util.admin){
             if (!req.body.membro) {req.body.membro = user.membro};
             if (!req.body.secretariado) {req.body.secretariado = user.secretariado};
@@ -95,12 +98,12 @@ let modUser = async (req, res, next) => {
         }
         // update the post with the new data
         await user.update({
-            Username: req.body.Username, Email: req.body.Email, P_W: User.P_W,
+            Username: req.body.Username, Email: req.body.Email, P_W: req.body.P_W,
             descricao: req.body.descricao, membro: req.body.membro,
             secretariado: req.body.secretariado, coordenador: req.body.coordenador,
             admin: req.body.admin
         });
-        res.status(204).json();
+        res.status(204).json({success: true, msg: "User was moded successfully!"});
 
     } catch (err) {
         next(err);

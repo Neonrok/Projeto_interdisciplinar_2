@@ -2,7 +2,7 @@
 async function carregarDadosUsuario() {
     const jwt = localStorage.getItem('token');
     if (!jwt) {
-        window.location.href = 'login.html';
+        window.location.href = '../../html/login.html';
         return;
     } 
     const id = localStorage.getItem('id');
@@ -49,6 +49,10 @@ function carregarFotoPerfil() {
     }
 }
 
+let Editar = async function Edit() {
+    window.location.href = '../../html/perfil/form.perfil.html';
+}
+
 // Evento para abrir seletor de arquivo
 document.getElementById('foto-perfil-container').addEventListener('click', () => {
     document.getElementById('input-foto-perfil').click();
@@ -89,8 +93,3 @@ window.addEventListener('DOMContentLoaded', () => {
     carregarDadosUsuario();
     carregarFotoPerfil();
 });
-
-
- document.getElementById("viewUsersBtn").addEventListener("click", function() {
-    window.location.href = "admin.html";
-  });

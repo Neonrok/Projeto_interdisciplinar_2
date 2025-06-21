@@ -21,7 +21,7 @@ async function LogIn() {
 
     alert('✅ Login bem-sucedido!');
 
-    window.location.href = '../html/perfil.html';
+    window.location.href = '../html/perfil/perfil.html';
   } else { alert('❌ Erro: ' + data.message); };
 };
 
@@ -30,7 +30,7 @@ async function SigIn() {
     const email = document.getElementById('signupEmail').value;
     const password = document.getElementById('signupPassword').value;
 
-    const response = await fetch('http://localhost:3000/users/', {
+    const response = await fetch('http://127.0.0.1:3000/users/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({Username:username, Email:email, P_W:password})
@@ -46,7 +46,7 @@ async function SigIn() {
 
     let form = await verify.json();
     localStorage.setItem('id', form.data);
-    window.location.href = '../html/perfil.html';
+    window.location.href = '../html/perfil/perfil.html';
   } else {
       alert('❌ Erro ao registar: ' + data.message);
   };
